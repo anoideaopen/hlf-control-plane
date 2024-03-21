@@ -3,16 +3,15 @@ package plane
 import (
 	"context"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (s *srv) ConfigOrderingDelete(ctx context.Context, req *pb.ConfigOrderingDeleteRequest) (*emptypb.Empty, error) {
+func (s *srv) ConfigOrderingDelete(ctx context.Context, req *pb.ConfigOrderingDeleteRequest) (*pb.ConfigOrderingDeleteResponse, error) {
 	logger := s.logger.With(zap.String("channel", req.ChannelName))
 
 	logger.Debug("get channel config", zap.String("channel", req.ChannelName))
@@ -36,15 +35,18 @@ func (s *srv) ConfigOrderingDelete(ctx context.Context, req *pb.ConfigOrderingDe
 	s.logger.Debug("got orderer config", zap.Int("orderers", len(orderers)), zap.String("consensus", consType.String()))
 
 	newOrd := make([]*pb.Orderer, 0)
+	var editOrd *pb.Orderer
 	for _, ord := range orderers {
-		if ord.Host == req.Orderer.Host && ord.Port == req.Orderer.Port {
+		if ord.Host == req.Orderer.Host && ord.Port == req.Orderer.Port ||
+			ord.ConsenterId == req.Orderer.ConsenterId {
+			editOrd = ord
 			continue
 		}
 		newOrd = append(newOrd, ord)
 	}
 
-	if err = s.proceedOrderingConsenterUpdate(ctx, req.ChannelName, config, newOrd); err != nil {
+	if err = s.proceedOrderingConsenterUpdate(ctx, req.ChannelName, config, newOrd, editOrd); err != nil {
 		return nil, status.Errorf(codes.Internal, "proceed update: %v", err)
 	}
-	return &emptypb.Empty{}, nil
+	return &pb.ConfigOrderingDeleteResponse{}, nil
 }

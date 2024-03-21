@@ -12,7 +12,6 @@ type cli struct {
 
 var _ Client = &cli{}
 
-// NewClient creates and returns a new endorser client for interacting with an endorser service.
 func NewClient(enCli pb.EndorserClient, id protoutil.Signer) Client {
 	return &cli{cli: enCli, id: id}
 }

@@ -1187,6 +1187,111 @@ var _ interface {
 	ErrorName() string
 } = LifecycleApproveForMyOrgRequestValidationError{}
 
+// Validate checks the field values on LifecycleApproveForMyOrgResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *LifecycleApproveForMyOrgResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on LifecycleApproveForMyOrgResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// LifecycleApproveForMyOrgResponseMultiError, or nil if none found.
+func (m *LifecycleApproveForMyOrgResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *LifecycleApproveForMyOrgResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return LifecycleApproveForMyOrgResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// LifecycleApproveForMyOrgResponseMultiError is an error wrapping multiple
+// validation errors returned by
+// LifecycleApproveForMyOrgResponse.ValidateAll() if the designated
+// constraints aren't met.
+type LifecycleApproveForMyOrgResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m LifecycleApproveForMyOrgResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m LifecycleApproveForMyOrgResponseMultiError) AllErrors() []error { return m }
+
+// LifecycleApproveForMyOrgResponseValidationError is the validation error
+// returned by LifecycleApproveForMyOrgResponse.Validate if the designated
+// constraints aren't met.
+type LifecycleApproveForMyOrgResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LifecycleApproveForMyOrgResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LifecycleApproveForMyOrgResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LifecycleApproveForMyOrgResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LifecycleApproveForMyOrgResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LifecycleApproveForMyOrgResponseValidationError) ErrorName() string {
+	return "LifecycleApproveForMyOrgResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LifecycleApproveForMyOrgResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLifecycleApproveForMyOrgResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LifecycleApproveForMyOrgResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LifecycleApproveForMyOrgResponseValidationError{}
+
 // Validate checks the field values on LifecycleCommitRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -1301,6 +1406,108 @@ var _ interface {
 	ErrorName() string
 } = LifecycleCommitRequestValidationError{}
 
+// Validate checks the field values on LifecycleCommitResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *LifecycleCommitResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on LifecycleCommitResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// LifecycleCommitResponseMultiError, or nil if none found.
+func (m *LifecycleCommitResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *LifecycleCommitResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return LifecycleCommitResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// LifecycleCommitResponseMultiError is an error wrapping multiple validation
+// errors returned by LifecycleCommitResponse.ValidateAll() if the designated
+// constraints aren't met.
+type LifecycleCommitResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m LifecycleCommitResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m LifecycleCommitResponseMultiError) AllErrors() []error { return m }
+
+// LifecycleCommitResponseValidationError is the validation error returned by
+// LifecycleCommitResponse.Validate if the designated constraints aren't met.
+type LifecycleCommitResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LifecycleCommitResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LifecycleCommitResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LifecycleCommitResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LifecycleCommitResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LifecycleCommitResponseValidationError) ErrorName() string {
+	return "LifecycleCommitResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LifecycleCommitResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLifecycleCommitResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LifecycleCommitResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LifecycleCommitResponseValidationError{}
+
 // Validate checks the field values on LifecycleInitRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -1406,3 +1613,105 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = LifecycleInitRequestValidationError{}
+
+// Validate checks the field values on LifecycleInitResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *LifecycleInitResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on LifecycleInitResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// LifecycleInitResponseMultiError, or nil if none found.
+func (m *LifecycleInitResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *LifecycleInitResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return LifecycleInitResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// LifecycleInitResponseMultiError is an error wrapping multiple validation
+// errors returned by LifecycleInitResponse.ValidateAll() if the designated
+// constraints aren't met.
+type LifecycleInitResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m LifecycleInitResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m LifecycleInitResponseMultiError) AllErrors() []error { return m }
+
+// LifecycleInitResponseValidationError is the validation error returned by
+// LifecycleInitResponse.Validate if the designated constraints aren't met.
+type LifecycleInitResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LifecycleInitResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LifecycleInitResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LifecycleInitResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LifecycleInitResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LifecycleInitResponseValidationError) ErrorName() string {
+	return "LifecycleInitResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LifecycleInitResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLifecycleInitResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LifecycleInitResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LifecycleInitResponseValidationError{}

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/matcher"
 	ordPb "github.com/hyperledger/fabric-protos-go/orderer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/matcher"
 	"go.uber.org/multierr"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -77,8 +77,6 @@ func (p *grpcPool) Close() error {
 	return result
 }
 
-// NewGrpcPool creates and initializes a new grpcPool instance.
-// It serves as a connection pool for managing gRPC connections to orderer nodes.
 func NewGrpcPool(ctx context.Context, logger *zap.Logger, tlsConf *tls.Config, m *matcher.Matcher) Pool {
 	return &grpcPool{ctx: ctx, l: logger.Named("orderer_pool"), connMap: make(map[string]*grpc.ClientConn), tlsConf: tlsConf, matcher: m}
 }

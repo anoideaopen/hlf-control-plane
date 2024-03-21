@@ -5,14 +5,13 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
-	"github.com/atomyze-foundation/hlf-control-plane/system/qscc"
 	pp "github.com/hyperledger/fabric-protos-go/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/qscc"
 	"go.uber.org/zap"
 	"golang.org/x/sync/errgroup"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type getChannelsResult struct {
@@ -26,7 +25,7 @@ type getChannelsChannelInfo struct {
 	prevBlockHash []byte
 }
 
-func (s *srv) ChannelJoined(ctx context.Context, _ *emptypb.Empty) (*pb.ChannelJoinedResponse, error) {
+func (s *srv) ChannelJoined(ctx context.Context, _ *pb.ChannelJoinedRequest) (*pb.ChannelJoinedResponse, error) {
 	g, ctx := errgroup.WithContext(ctx)
 	resultChan := make(chan getChannelsResult)
 	for _, p := range s.localPeers {

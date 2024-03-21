@@ -1,29 +1,29 @@
 # hlf-control-plane
 
-Service for hlf fabric administration
-
 ## TOC
 
-- [hlf-control-plane](#-hlf-control-plane)
-  - [TOC](#-toc)
-  - [Description](#-description)
-  - [Open API](#-open-api)
-  - [Configuration](#-configuration)
-  - [Monitoring](#-monitoring)
-  - [Development](#-development)
-    - [Utils](#-utils)
-    - [Protobuf](#-protobuf)
-    - [Code generation](#-code-generation)
-  - [License](#-license)
-  - [Links](#-links)
+- [hlf-control-plane](#hlf-control-plane)
+    - [TOC](#toc)
+    - [Description](#description)
+    - [OpenAPI](#open-api)
+    - [Configuration](#configuration)
+    - [Monitoring](#monitoring)
+    - [Development](#development)
+        - [Utils](#utils)
+        - [Protobuf management](#protobuf)
+        - [Code generation](#code-generation)
+    - [License](#license)
+    - [Links](#links)
 
 ## Description
 
-A utility service that provides simplified access to fabric administrative functions, such as creating channels, installing chaincodes, and updating channels.
+Утилита- сервис предоставляющая упрощенный доступ к администраторским функциям fabric, как например создание каналов,
+инсталляция чейнкодов, апдейт каналов #admin#chaincode#deploy#hlf#controlplane#
 
 ## Open API
 
-The service provides OpenAPI (Swagger) functionality. The list of methods and request formats is available at the [link](proto/plane.swagger.json).
+Сервис предоставляет функционал OpenAPI(Swagger). Список методов и форматов запросов доступен
+по [ссылке](proto/plane.swagger.json)
 
 ## Configuration
 
@@ -34,7 +34,7 @@ mspId: atomyzeMSP
 logLevel: debug
 # Access token value
 accessToken: "my_awesome_token"
-# Path to the certificate and private key of your identity
+# Path to cert and private key of your identity
 identity:
   cert: certs/atomyze_admin.pem
   key: certs/atomyze_admin_key.pem
@@ -57,10 +57,10 @@ tls:
 
 # List of peers managed by organization
 peers:
-  - host: peer1.atomyze.io:7051
-  - host: peer2.atomyze.io:7051
+  - host: peer1.atomyze.stage.core.n-t.io:7051
+  - host: peer2.atomyze.stage.core.n-t.io:7051
 
-# ports configuration for grpc and http
+# ports configuration fo grpc and http
 listen:
   http: ":8080"
   grpc: ":8081"
@@ -68,8 +68,7 @@ listen:
 
 ## Monitoring
 
-The service includes a built-in **healthcheck** mechanism, available without authentication at the path `/v1/healthz`, returning information in the following format:
-
+Сервис содержит встроенный механизм **healthcheck**, доступный без авторизации по пути `/v1/healthz`, возвращающий информацию следующего вида:
 ```json
 {
   "status": "SERVING"
@@ -80,13 +79,13 @@ The service includes a built-in **healthcheck** mechanism, available without aut
 
 ### Utils
 
-For the generation of tools needed for work, use
+For generation tools needed to work, use
 
 ```bash
 make build-tools
 ```
 
-Tools and their dependencies are described in the `tools` module. The installation path is `$(pwd)/bin` by default.
+Tools and their dependencies are described in module `tools`. Installation path is `$(pwd)/bin` by default.
 
 ### Protobuf
 
@@ -101,7 +100,7 @@ bin/protodep up
 
 ### Code generation
 
-Use `go generate` in the root path to generate code from `.proto` and `swagger` client for tests:
+Use `go generate` in root path to generate code from `.proto` and `swagger` client for tests:
 
 ```bash
 go generate
@@ -109,7 +108,7 @@ go generate
 
 ## License
 
-[Default license](LICENSE)
+Apache-2.0
 
 ## Links
 

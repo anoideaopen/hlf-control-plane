@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package proto;
-option go_package = "github.com/atomyze-foundation/hlf-control-plane/proto";
+option go_package = "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -12,6 +12,7 @@ import "chaincode.proto";
 import "lifecycle.proto";
 import "config.proto";
 import "discovery.proto";
+import "ordering.proto";
 
 message ErrorResponse {
   string error = 1;
@@ -23,7 +24,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     version: "1.0";
     description: "";
     license: {
-      name: "[Default license](LICENSE)";
+      name: "Apache-2.0";
     };
   };
   tags: [];
@@ -88,7 +89,7 @@ service ChaincodeService {
     };
   }
 
-  rpc ChaincodeInstalled(google.protobuf.Empty) returns (ChaincodeInstalledResponse){//nolint
+  rpc ChaincodeInstalled(ChaincodeInstalledRequest) returns (ChaincodeInstalledResponse){
     option (google.api.http) = {
       get: "/v1/chaincode/installed"
     };
@@ -99,7 +100,7 @@ service ChaincodeService {
     };
   }
 
-  rpc ChannelJoined(google.protobuf.Empty) returns(ChannelJoinedResponse){
+  rpc ChannelJoined(ChannelJoinedRequest) returns(ChannelJoinedResponse){
     option (google.api.http) = {
       get: "/v1/channel/joined"
     };
@@ -118,6 +119,18 @@ service ChaincodeService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Join channel by fetching genesis block from orderer";
       operation_id: "channelJoin";
+      tags: "Channels";
+    };
+  }
+
+  rpc ChannelCreate(ChannelCreateRequest) returns(ChannelCreateResponse) {
+    option (google.api.http) = {
+      post: "/v1/channel/create"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create channel genesis block and join orderers";
+      operation_id: "channelCreate";
       tags: "Channels";
     };
   }
@@ -168,7 +181,7 @@ service ChaincodeService {
     };
   }
 
-  rpc LifecycleApproveForMyOrg(LifecycleApproveForMyOrgRequest) returns (google.protobuf.Empty){
+  rpc LifecycleApproveForMyOrg(LifecycleApproveForMyOrgRequest) returns (LifecycleApproveForMyOrgResponse){
     option (google.api.http) = {
       post: "/v1/lifecycle/approve-for-my-org"
       body: "*"
@@ -180,7 +193,7 @@ service ChaincodeService {
     };
   }
 
-  rpc LifecycleCommit(LifecycleCommitRequest) returns (google.protobuf.Empty){
+  rpc LifecycleCommit(LifecycleCommitRequest) returns (LifecycleCommitResponse){
     option (google.api.http) = {
       post: "/v1/lifecycle/commit"
       body: "*"
@@ -192,7 +205,7 @@ service ChaincodeService {
     };
   }
 
-  rpc LifecycleInit(LifecycleInitRequest) returns (google.protobuf.Empty){
+  rpc LifecycleInit(LifecycleInitRequest) returns (LifecycleInitResponse){
     option (google.api.http) = {
       post: "/v1/lifecycle/init"
       body: "*"
@@ -238,7 +251,7 @@ service ChaincodeService {
     };
   }
 
-  rpc ConfigOrderingAdd(ConfigOrderingAddRequest) returns(google.protobuf.Empty) {
+  rpc ConfigOrderingAdd(ConfigOrderingAddRequest) returns(ConfigOrderingAddResponse) {
     option (google.api.http) = {
       post: "/v1/config/{channel_name}/ordering"
       body: "*"
@@ -250,7 +263,7 @@ service ChaincodeService {
     };
   }
 
-  rpc ConfigOrderingUpdate(ConfigOrderingUpdateRequest) returns(google.protobuf.Empty) {
+  rpc ConfigOrderingUpdate(ConfigOrderingUpdateRequest) returns(ConfigOrderingUpdateResponse) {
     option (google.api.http) = {
       put: "/v1/config/{channel_name}/ordering"
       body: "*"
@@ -262,7 +275,7 @@ service ChaincodeService {
     };
   }
 
-  rpc ConfigOrderingDelete(ConfigOrderingDeleteRequest) returns(google.protobuf.Empty) {
+  rpc ConfigOrderingDelete(ConfigOrderingDeleteRequest) returns(ConfigOrderingDeleteResponse) {
     option (google.api.http) = {
       delete: "/v1/config/{channel_name}/ordering"
       body: "*"
@@ -274,7 +287,51 @@ service ChaincodeService {
     };
   }
 
+  rpc ConfigSmartBFTGet(ConfigSmartBFTGetRequest) returns(ConfigSmartBFTGetResponse) {
+    option (google.api.http) = {
+      get: "/v1/config/{channel_name}/smartbft"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get config SmartBFT options";
+      operation_id: "smartBftGet";
+      tags: ["Configuration"];
+    };
+  }
 
+  rpc ConfigSmartBFTSet(ConfigSmartBFTSetRequest) returns(ConfigSmartBFTSetResponse) {
+    option (google.api.http) = {
+      post: "/v1/config/{channel_name}/smartbft"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Set config SmartBFT options";
+      operation_id: "smartBftSet";
+      tags: ["Configuration"];
+    };
+  }
+
+  rpc ConfigOrganizationDelete(ConfigOrganizationDeleteRequest) returns(ConfigOrganizationDeleteResponse) {
+    option (google.api.http) = {
+      delete: "/v1/config/{channel_name}/organization"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Remove organization from channel config";
+      operation_id: "configOrganizationDelete";
+      tags: ["Configuration"];
+    };
+  }
+
+  rpc ConfigGet(ConfigGetRequest) returns(ConfigGetResponse) {
+    option (google.api.http) = {
+      get: "/v1/config/{channel_name}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get current channel config";
+      operation_id: "configGet";
+      tags: ["Configuration"];
+    };
+  }
 
   rpc DiscoveryEndorsers(DiscoveryEndorsersRequest) returns(DiscoveryEndorsersResponse) {
     option (google.api.http) = {
@@ -309,6 +366,42 @@ service ChaincodeService {
       summary: "Get config of channel";
       operation_id: "discoveryConfig";
       tags: "Discovery";
+    };
+  }
+
+  rpc OrderingJoin(OrderingRequest) returns(OrderingJoinResponse) {
+    option (google.api.http) = {
+      post: "/v1/ordering/{channel_name}/join"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Join orderer to channel";
+      operation_id: "orderingJoin";
+      tags: "Ordering";
+    };
+  }
+
+  rpc OrderingListInfo(OrderingRequest) returns(OrderingListInfoResponse) {
+    option (google.api.http) = {
+      post: "/v1/ordering/{channel_name}/list"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List of channels for orderer";
+      operation_id: "orderingListInfo";
+      tags: "Ordering";
+    };
+  }
+
+  rpc OrderingRemove(OrderingRequest) returns(OrderingRemoveResponse) {
+    option (google.api.http) = {
+      post: "/v1/ordering/{channel_name}/remove"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Remove orderer from channel";
+      operation_id: "orderingRemove";
+      tags: "Ordering";
     };
   }
 }

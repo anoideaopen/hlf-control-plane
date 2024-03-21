@@ -1,8 +1,8 @@
 proto_outdir = "./vendor_proto"
 
 [[dependencies]]
-target = "github.com/hyperledger/fabric-protos"
-branch = "main"
+target = "github.com/scientificideas/fabric-protos"
+branch = "release-2.5-bft"
 
 [[dependencies]]
 target = "github.com/googleapis/googleapis"

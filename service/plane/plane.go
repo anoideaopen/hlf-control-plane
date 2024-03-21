@@ -1,12 +1,14 @@
 package plane
 
 import (
-	sd "github.com/atomyze-foundation/hlf-control-plane/pkg/delivery"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/discovery"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/orderer"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
+	"crypto/tls"
+
 	"github.com/hyperledger/fabric/protoutil"
+	sd "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/delivery"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/discovery"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/orderer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"go.uber.org/zap"
 )
 
@@ -22,29 +24,23 @@ type srv struct {
 	id         protoutil.Signer
 	dCli       sd.Client
 	discCli    discovery.Client
+	addIds     []protoutil.Signer
+	tlsCli     *tls.Config
 
 	proto.UnimplementedChaincodeServiceServer
 }
 
-// NewService creates and returns a new instance of the ChaincodeServiceServer,
-// which serves as a server for interacting with chaincode-related services.
-func NewService(
-	mspID string,
-	signer protoutil.Signer,
-	logger *zap.Logger,
-	ordPool orderer.Pool,
-	peerPool peer.Pool,
-	discoveryCli discovery.Client,
-	localPeers []*peer.Peer,
-) proto.ChaincodeServiceServer {
+func NewService(mspID string, signer protoutil.Signer, tlsConf *tls.Config, logger *zap.Logger, ordPool orderer.Pool, peerPool peer.Pool, discoveryCli discovery.Client, localPeers []*peer.Peer, addIds []protoutil.Signer) proto.ChaincodeServiceServer {
 	return &srv{
 		mspID:      mspID,
 		localPeers: localPeers,
 		logger:     logger.Named("plane").With(zap.String("mspId", mspID)),
 		ordPool:    ordPool,
 		id:         signer,
+		tlsCli:     tlsConf,
 		peerPool:   peerPool,
 		discCli:    discoveryCli,
 		dCli:       sd.NewPeer(logger, peerPool, localPeers, signer),
+		addIds:     addIds,
 	}
 }

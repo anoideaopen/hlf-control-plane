@@ -67,6 +67,44 @@ func (x *ChannelJoinedResponse) GetResult() []*ChannelJoinedResponse_Result {
 	return nil
 }
 
+type ChannelJoinedRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ChannelJoinedRequest) Reset() {
+	*x = ChannelJoinedRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_channel_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChannelJoinedRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChannelJoinedRequest) ProtoMessage() {}
+
+func (x *ChannelJoinedRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_channel_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChannelJoinedRequest.ProtoReflect.Descriptor instead.
+func (*ChannelJoinedRequest) Descriptor() ([]byte, []int) {
+	return file_channel_proto_rawDescGZIP(), []int{1}
+}
+
 // Request and response for channel join method
 type ChannelJoinRequest struct {
 	state         protoimpl.MessageState
@@ -80,7 +118,7 @@ type ChannelJoinRequest struct {
 func (x *ChannelJoinRequest) Reset() {
 	*x = ChannelJoinRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_channel_proto_msgTypes[1]
+		mi := &file_channel_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -93,7 +131,7 @@ func (x *ChannelJoinRequest) String() string {
 func (*ChannelJoinRequest) ProtoMessage() {}
 
 func (x *ChannelJoinRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_channel_proto_msgTypes[1]
+	mi := &file_channel_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -106,7 +144,7 @@ func (x *ChannelJoinRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChannelJoinRequest.ProtoReflect.Descriptor instead.
 func (*ChannelJoinRequest) Descriptor() ([]byte, []int) {
-	return file_channel_proto_rawDescGZIP(), []int{1}
+	return file_channel_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ChannelJoinRequest) GetChannelName() string {
@@ -134,7 +172,7 @@ type ChannelJoinResponse struct {
 func (x *ChannelJoinResponse) Reset() {
 	*x = ChannelJoinResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_channel_proto_msgTypes[2]
+		mi := &file_channel_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -147,7 +185,7 @@ func (x *ChannelJoinResponse) String() string {
 func (*ChannelJoinResponse) ProtoMessage() {}
 
 func (x *ChannelJoinResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_channel_proto_msgTypes[2]
+	mi := &file_channel_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -160,10 +198,113 @@ func (x *ChannelJoinResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChannelJoinResponse.ProtoReflect.Descriptor instead.
 func (*ChannelJoinResponse) Descriptor() ([]byte, []int) {
-	return file_channel_proto_rawDescGZIP(), []int{2}
+	return file_channel_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ChannelJoinResponse) GetResult() []*ChannelJoinResponse_PeerResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+// Request and response for channel create method
+type ChannelCreateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ChannelName   string          `protobuf:"bytes,1,opt,name=channel_name,json=channelName,proto3" json:"channel_name,omitempty"`
+	Organizations []*Organization `protobuf:"bytes,2,rep,name=organizations,proto3" json:"organizations,omitempty"`
+}
+
+func (x *ChannelCreateRequest) Reset() {
+	*x = ChannelCreateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_channel_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChannelCreateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChannelCreateRequest) ProtoMessage() {}
+
+func (x *ChannelCreateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_channel_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChannelCreateRequest.ProtoReflect.Descriptor instead.
+func (*ChannelCreateRequest) Descriptor() ([]byte, []int) {
+	return file_channel_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ChannelCreateRequest) GetChannelName() string {
+	if x != nil {
+		return x.ChannelName
+	}
+	return ""
+}
+
+func (x *ChannelCreateRequest) GetOrganizations() []*Organization {
+	if x != nil {
+		return x.Organizations
+	}
+	return nil
+}
+
+type ChannelCreateResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result []*ChannelCreateResponse_OrdererResult `protobuf:"bytes,1,rep,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *ChannelCreateResponse) Reset() {
+	*x = ChannelCreateResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_channel_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChannelCreateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChannelCreateResponse) ProtoMessage() {}
+
+func (x *ChannelCreateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_channel_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChannelCreateResponse.ProtoReflect.Descriptor instead.
+func (*ChannelCreateResponse) Descriptor() ([]byte, []int) {
+	return file_channel_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ChannelCreateResponse) GetResult() []*ChannelCreateResponse_OrdererResult {
 	if x != nil {
 		return x.Result
 	}
@@ -182,7 +323,7 @@ type ChannelJoinedResponse_Result struct {
 func (x *ChannelJoinedResponse_Result) Reset() {
 	*x = ChannelJoinedResponse_Result{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_channel_proto_msgTypes[3]
+		mi := &file_channel_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -195,7 +336,7 @@ func (x *ChannelJoinedResponse_Result) String() string {
 func (*ChannelJoinedResponse_Result) ProtoMessage() {}
 
 func (x *ChannelJoinedResponse_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_channel_proto_msgTypes[3]
+	mi := &file_channel_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -239,7 +380,7 @@ type ChannelJoinedResponse_PeerResult struct {
 func (x *ChannelJoinedResponse_PeerResult) Reset() {
 	*x = ChannelJoinedResponse_PeerResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_channel_proto_msgTypes[4]
+		mi := &file_channel_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -252,7 +393,7 @@ func (x *ChannelJoinedResponse_PeerResult) String() string {
 func (*ChannelJoinedResponse_PeerResult) ProtoMessage() {}
 
 func (x *ChannelJoinedResponse_PeerResult) ProtoReflect() protoreflect.Message {
-	mi := &file_channel_proto_msgTypes[4]
+	mi := &file_channel_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -308,7 +449,7 @@ type ChannelJoinRequest_Orderer struct {
 func (x *ChannelJoinRequest_Orderer) Reset() {
 	*x = ChannelJoinRequest_Orderer{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_channel_proto_msgTypes[5]
+		mi := &file_channel_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -321,7 +462,7 @@ func (x *ChannelJoinRequest_Orderer) String() string {
 func (*ChannelJoinRequest_Orderer) ProtoMessage() {}
 
 func (x *ChannelJoinRequest_Orderer) ProtoReflect() protoreflect.Message {
-	mi := &file_channel_proto_msgTypes[5]
+	mi := &file_channel_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -334,7 +475,7 @@ func (x *ChannelJoinRequest_Orderer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChannelJoinRequest_Orderer.ProtoReflect.Descriptor instead.
 func (*ChannelJoinRequest_Orderer) Descriptor() ([]byte, []int) {
-	return file_channel_proto_rawDescGZIP(), []int{1, 0}
+	return file_channel_proto_rawDescGZIP(), []int{2, 0}
 }
 
 func (x *ChannelJoinRequest_Orderer) GetHost() string {
@@ -367,7 +508,7 @@ type ChannelJoinResponse_PeerResult struct {
 func (x *ChannelJoinResponse_PeerResult) Reset() {
 	*x = ChannelJoinResponse_PeerResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_channel_proto_msgTypes[6]
+		mi := &file_channel_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -380,7 +521,7 @@ func (x *ChannelJoinResponse_PeerResult) String() string {
 func (*ChannelJoinResponse_PeerResult) ProtoMessage() {}
 
 func (x *ChannelJoinResponse_PeerResult) ProtoReflect() protoreflect.Message {
-	mi := &file_channel_proto_msgTypes[6]
+	mi := &file_channel_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -393,7 +534,7 @@ func (x *ChannelJoinResponse_PeerResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChannelJoinResponse_PeerResult.ProtoReflect.Descriptor instead.
 func (*ChannelJoinResponse_PeerResult) Descriptor() ([]byte, []int) {
-	return file_channel_proto_rawDescGZIP(), []int{2, 0}
+	return file_channel_proto_rawDescGZIP(), []int{3, 0}
 }
 
 func (x *ChannelJoinResponse_PeerResult) GetPeer() string {
@@ -440,6 +581,69 @@ func (*ChannelJoinResponse_PeerResult_Existed) isChannelJoinResponse_PeerResult_
 
 func (*ChannelJoinResponse_PeerResult_Err) isChannelJoinResponse_PeerResult_Result() {}
 
+type ChannelCreateResponse_OrdererResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Host   string `protobuf:"bytes,1,opt,name=host,proto3" json:"host,omitempty"`
+	Port   uint32 `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`
+	Joined bool   `protobuf:"varint,3,opt,name=joined,proto3" json:"joined,omitempty"`
+}
+
+func (x *ChannelCreateResponse_OrdererResult) Reset() {
+	*x = ChannelCreateResponse_OrdererResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_channel_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChannelCreateResponse_OrdererResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChannelCreateResponse_OrdererResult) ProtoMessage() {}
+
+func (x *ChannelCreateResponse_OrdererResult) ProtoReflect() protoreflect.Message {
+	mi := &file_channel_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChannelCreateResponse_OrdererResult.ProtoReflect.Descriptor instead.
+func (*ChannelCreateResponse_OrdererResult) Descriptor() ([]byte, []int) {
+	return file_channel_proto_rawDescGZIP(), []int{5, 0}
+}
+
+func (x *ChannelCreateResponse_OrdererResult) GetHost() string {
+	if x != nil {
+		return x.Host
+	}
+	return ""
+}
+
+func (x *ChannelCreateResponse_OrdererResult) GetPort() uint32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+func (x *ChannelCreateResponse_OrdererResult) GetJoined() bool {
+	if x != nil {
+		return x.Joined
+	}
+	return false
+}
+
 var File_channel_proto protoreflect.FileDescriptor
 
 var file_channel_proto_rawDesc = []byte{
@@ -465,33 +669,53 @@ var file_channel_proto_rawDesc = []byte{
 	0x28, 0x0c, 0x52, 0x09, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48, 0x61, 0x73, 0x68, 0x12, 0x26, 0x0a,
 	0x0f, 0x70, 0x72, 0x65, 0x76, 0x5f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x61, 0x73, 0x68,
 	0x18, 0x04, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0d, 0x70, 0x72, 0x65, 0x76, 0x42, 0x6c, 0x6f, 0x63,
-	0x6b, 0x48, 0x61, 0x73, 0x68, 0x22, 0xa7, 0x01, 0x0a, 0x12, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65,
-	0x6c, 0x4a, 0x6f, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c,
-	0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x12,
-	0x3b, 0x0a, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x21, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c,
-	0x4a, 0x6f, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x4f, 0x72, 0x64, 0x65,
-	0x72, 0x65, 0x72, 0x52, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x72, 0x1a, 0x31, 0x0a, 0x07,
-	0x4f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x68, 0x6f, 0x73, 0x74, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x68, 0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x70,
-	0x6f, 0x72, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x22,
-	0xb0, 0x01, 0x0a, 0x13, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x4a, 0x6f, 0x69, 0x6e, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3d, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e,
-	0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x4a, 0x6f, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x2e, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06,
-	0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x1a, 0x5a, 0x0a, 0x0a, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65,
-	0x73, 0x75, 0x6c, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x65, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x04, 0x70, 0x65, 0x65, 0x72, 0x12, 0x1a, 0x0a, 0x07, 0x65, 0x78, 0x69, 0x73,
-	0x74, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x48, 0x00, 0x52, 0x07, 0x65, 0x78, 0x69,
-	0x73, 0x74, 0x65, 0x64, 0x12, 0x12, 0x0a, 0x03, 0x65, 0x72, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x48, 0x00, 0x52, 0x03, 0x65, 0x72, 0x72, 0x42, 0x08, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75,
-	0x6c, 0x74, 0x42, 0x3d, 0x5a, 0x3b, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x6e, 0x2d, 0x74,
-	0x2e, 0x69, 0x6f, 0x2f, 0x63, 0x6f, 0x72, 0x65, 0x2f, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x72, 0x79,
-	0x2f, 0x68, 0x6c, 0x66, 0x2d, 0x74, 0x6f, 0x6f, 0x6c, 0x2f, 0x68, 0x6c, 0x66, 0x2d, 0x63, 0x6f,
-	0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2d, 0x70, 0x6c, 0x61, 0x6e, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6b, 0x48, 0x61, 0x73, 0x68, 0x22, 0x16, 0x0a, 0x14, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c,
+	0x4a, 0x6f, 0x69, 0x6e, 0x65, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0xa7, 0x01,
+	0x0a, 0x12, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x4a, 0x6f, 0x69, 0x6e, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6e,
+	0x6e, 0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x3b, 0x0a, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72,
+	0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x4a, 0x6f, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x72, 0x52, 0x07, 0x6f, 0x72, 0x64,
+	0x65, 0x72, 0x65, 0x72, 0x1a, 0x31, 0x0a, 0x07, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x72, 0x12,
+	0x12, 0x0a, 0x04, 0x68, 0x6f, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x68,
+	0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0d, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x22, 0xb0, 0x01, 0x0a, 0x13, 0x43, 0x68, 0x61, 0x6e,
+	0x6e, 0x65, 0x6c, 0x4a, 0x6f, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x3d, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x25, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x4a,
+	0x6f, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x50, 0x65, 0x65, 0x72,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x1a, 0x5a,
+	0x0a, 0x0a, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x12, 0x0a, 0x04,
+	0x70, 0x65, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x65, 0x65, 0x72,
+	0x12, 0x1a, 0x0a, 0x07, 0x65, 0x78, 0x69, 0x73, 0x74, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x08, 0x48, 0x00, 0x52, 0x07, 0x65, 0x78, 0x69, 0x73, 0x74, 0x65, 0x64, 0x12, 0x12, 0x0a, 0x03,
+	0x65, 0x72, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x03, 0x65, 0x72, 0x72,
+	0x42, 0x08, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x74, 0x0a, 0x14, 0x43, 0x68,
+	0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65,
+	0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x39, 0x0a, 0x0d, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x4f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x0d, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x22, 0xac, 0x01, 0x0a, 0x15, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x42, 0x0a, 0x06, 0x72, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x72,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x1a, 0x4f,
+	0x0a, 0x0d, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12,
+	0x12, 0x0a, 0x04, 0x68, 0x6f, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x68,
+	0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0d, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6a, 0x6f, 0x69, 0x6e, 0x65,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x6a, 0x6f, 0x69, 0x6e, 0x65, 0x64, 0x42,
+	0x3d, 0x5a, 0x3b, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x6e, 0x2d, 0x74, 0x2e, 0x69, 0x6f,
+	0x2f, 0x63, 0x6f, 0x72, 0x65, 0x2f, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x72, 0x79, 0x2f, 0x68, 0x6c,
+	0x66, 0x2d, 0x74, 0x6f, 0x6f, 0x6c, 0x2f, 0x68, 0x6c, 0x66, 0x2d, 0x63, 0x6f, 0x6e, 0x74, 0x72,
+	0x6f, 0x6c, 0x2d, 0x70, 0x6c, 0x61, 0x6e, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -506,26 +730,33 @@ func file_channel_proto_rawDescGZIP() []byte {
 	return file_channel_proto_rawDescData
 }
 
-var file_channel_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_channel_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_channel_proto_goTypes = []interface{}{
-	(*ChannelJoinedResponse)(nil),            // 0: proto.ChannelJoinedResponse
-	(*ChannelJoinRequest)(nil),               // 1: proto.ChannelJoinRequest
-	(*ChannelJoinResponse)(nil),              // 2: proto.ChannelJoinResponse
-	(*ChannelJoinedResponse_Result)(nil),     // 3: proto.ChannelJoinedResponse.Result
-	(*ChannelJoinedResponse_PeerResult)(nil), // 4: proto.ChannelJoinedResponse.PeerResult
-	(*ChannelJoinRequest_Orderer)(nil),       // 5: proto.ChannelJoinRequest.Orderer
-	(*ChannelJoinResponse_PeerResult)(nil),   // 6: proto.ChannelJoinResponse.PeerResult
+	(*ChannelJoinedResponse)(nil),               // 0: proto.ChannelJoinedResponse
+	(*ChannelJoinedRequest)(nil),                // 1: proto.ChannelJoinedRequest
+	(*ChannelJoinRequest)(nil),                  // 2: proto.ChannelJoinRequest
+	(*ChannelJoinResponse)(nil),                 // 3: proto.ChannelJoinResponse
+	(*ChannelCreateRequest)(nil),                // 4: proto.ChannelCreateRequest
+	(*ChannelCreateResponse)(nil),               // 5: proto.ChannelCreateResponse
+	(*ChannelJoinedResponse_Result)(nil),        // 6: proto.ChannelJoinedResponse.Result
+	(*ChannelJoinedResponse_PeerResult)(nil),    // 7: proto.ChannelJoinedResponse.PeerResult
+	(*ChannelJoinRequest_Orderer)(nil),          // 8: proto.ChannelJoinRequest.Orderer
+	(*ChannelJoinResponse_PeerResult)(nil),      // 9: proto.ChannelJoinResponse.PeerResult
+	(*ChannelCreateResponse_OrdererResult)(nil), // 10: proto.ChannelCreateResponse.OrdererResult
+	(*Organization)(nil),                        // 11: proto.Organization
 }
 var file_channel_proto_depIdxs = []int32{
-	3, // 0: proto.ChannelJoinedResponse.result:type_name -> proto.ChannelJoinedResponse.Result
-	5, // 1: proto.ChannelJoinRequest.orderer:type_name -> proto.ChannelJoinRequest.Orderer
-	6, // 2: proto.ChannelJoinResponse.result:type_name -> proto.ChannelJoinResponse.PeerResult
-	4, // 3: proto.ChannelJoinedResponse.Result.peers:type_name -> proto.ChannelJoinedResponse.PeerResult
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	6,  // 0: proto.ChannelJoinedResponse.result:type_name -> proto.ChannelJoinedResponse.Result
+	8,  // 1: proto.ChannelJoinRequest.orderer:type_name -> proto.ChannelJoinRequest.Orderer
+	9,  // 2: proto.ChannelJoinResponse.result:type_name -> proto.ChannelJoinResponse.PeerResult
+	11, // 3: proto.ChannelCreateRequest.organizations:type_name -> proto.Organization
+	10, // 4: proto.ChannelCreateResponse.result:type_name -> proto.ChannelCreateResponse.OrdererResult
+	7,  // 5: proto.ChannelJoinedResponse.Result.peers:type_name -> proto.ChannelJoinedResponse.PeerResult
+	6,  // [6:6] is the sub-list for method output_type
+	6,  // [6:6] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_channel_proto_init() }
@@ -548,7 +779,7 @@ func file_channel_proto_init() {
 			}
 		}
 		file_channel_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ChannelJoinRequest); i {
+			switch v := v.(*ChannelJoinedRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -560,7 +791,7 @@ func file_channel_proto_init() {
 			}
 		}
 		file_channel_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ChannelJoinResponse); i {
+			switch v := v.(*ChannelJoinRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -572,7 +803,7 @@ func file_channel_proto_init() {
 			}
 		}
 		file_channel_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ChannelJoinedResponse_Result); i {
+			switch v := v.(*ChannelJoinResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -584,7 +815,7 @@ func file_channel_proto_init() {
 			}
 		}
 		file_channel_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ChannelJoinedResponse_PeerResult); i {
+			switch v := v.(*ChannelCreateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -596,7 +827,7 @@ func file_channel_proto_init() {
 			}
 		}
 		file_channel_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ChannelJoinRequest_Orderer); i {
+			switch v := v.(*ChannelCreateResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -608,6 +839,42 @@ func file_channel_proto_init() {
 			}
 		}
 		file_channel_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChannelJoinedResponse_Result); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_channel_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChannelJoinedResponse_PeerResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_channel_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChannelJoinRequest_Orderer); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_channel_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ChannelJoinResponse_PeerResult); i {
 			case 0:
 				return &v.state
@@ -619,8 +886,20 @@ func file_channel_proto_init() {
 				return nil
 			}
 		}
+		file_channel_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChannelCreateResponse_OrdererResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
-	file_channel_proto_msgTypes[6].OneofWrappers = []interface{}{
+	file_channel_proto_msgTypes[9].OneofWrappers = []interface{}{
 		(*ChannelJoinResponse_PeerResult_Existed)(nil),
 		(*ChannelJoinResponse_PeerResult_Err)(nil),
 	}
@@ -630,7 +909,7 @@ func file_channel_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_channel_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

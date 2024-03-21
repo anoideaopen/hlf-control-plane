@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package proto;
-option go_package = "github.com/atomyze-foundation/hlf-control-plane/proto";
+option go_package = "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto";
 
 import "common.proto";
 
@@ -20,6 +20,8 @@ message ChannelJoinedResponse {
 
   repeated Result result = 1;
 }
+
+message ChannelJoinedRequest{}
 
 // Request and response for channel join method
 message ChannelJoinRequest {
@@ -41,4 +43,20 @@ message ChannelJoinResponse {
   }
 
   repeated PeerResult result = 1;
+}
+
+// Request and response for channel create method
+message ChannelCreateRequest {
+  string channel_name = 1;
+  repeated Organization organizations = 2;
+}
+
+message ChannelCreateResponse {
+  message OrdererResult {
+    string host = 1;
+    uint32 port = 2;
+    bool joined = 3;
+  }
+
+  repeated OrdererResult result = 1;
 }

@@ -5,14 +5,12 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/status"
 )
 
-// ErrorHandler is a function that returns a runtime.ServeMuxOption
-// for custom error handling in a gRPC-Gateway server.
 func ErrorHandler(logger *zap.Logger) runtime.ServeMuxOption {
 	return runtime.WithErrorHandler(func(ctx context.Context, mux *runtime.ServeMux, marshaler runtime.Marshaler, writer http.ResponseWriter, request *http.Request, err error) {
 		resp := &proto.ErrorResponse{}

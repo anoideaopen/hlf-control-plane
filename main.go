@@ -13,18 +13,19 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/config"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/discovery"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/health"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/matcher"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/orderer"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/service/plane"
-	srvMw "github.com/atomyze-foundation/hlf-control-plane/service/plane/middleware"
 	"github.com/felixge/httpsnoop"
 	"github.com/flowchartsman/swaggerui"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/hyperledger/fabric/protoutil"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/config"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/discovery"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/health"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/matcher"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/orderer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/service/plane"
+	srvMw "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/service/plane/middleware"
 	"go.uber.org/zap"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
@@ -32,12 +33,11 @@ import (
 	"google.golang.org/grpc/health/grpc_health_v1"
 )
 
-// AppInfoVer is set by build flags
 var AppInfoVer string
 
 var confFlag = flag.String("config", "config.yaml", "path to configuration file")
 
-func main() {
+func main() { //nolint:funlen
 	flag.Parse()
 
 	ctx := context.Background()
@@ -69,6 +69,15 @@ func main() {
 	if err != nil {
 		logger.Fatal("identity load failed", zap.Error(err))
 	}
+
+	addIds := make([]protoutil.Signer, 0)
+	for _, cid := range conf.Ids {
+		aid, err := cid.Load(logger, cid.MspID)
+		if err != nil {
+			logger.Fatal("load id failed", zap.Error(err))
+		}
+		addIds = append(addIds, aid)
+	}
 	// create local peers instances
 	localPeers := make([]*peer.Peer, 0, len(conf.Peers))
 	for _, p := range conf.Peers {
@@ -86,7 +95,7 @@ func main() {
 	// create orderer grpc pool
 	ordPool := orderer.NewGrpcPool(ctx, logger, tlsCreds, match)
 	// create service instance
-	ccSrv := plane.NewService(conf.MspID, id, logger, ordPool, peerPool, discovery.NewClient(logger, conf.MspID, peerPool, id), conf.Peers)
+	ccSrv := plane.NewService(conf.MspID, id, tlsCreds, logger, ordPool, peerPool, discovery.NewClient(logger, conf.MspID, peerPool, id), conf.Peers, addIds)
 	// listen and server http and grpc servers
 	if err = listen(ctx, logger, conf, ccSrv, peerPool, ordPool); err != nil {
 		logger.Error("server returned error", zap.Error(err))

@@ -1,7 +1,16 @@
 syntax = "proto3";
 
 package proto;
-option go_package = "github.com/atomyze-foundation/hlf-control-plane/proto";
+option go_package = "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto";
+
+message Organization{
+  string name = 1;
+  string id = 2;
+  bytes root_certs = 3;
+  bytes tls_root_certs = 4;
+  repeated Policy policies = 5;
+  repeated Orderer orderers = 6;
+}
 
 message Orderer {
   string host = 1;
@@ -11,10 +20,17 @@ message Orderer {
   string msp_id = 5;
   bytes identity = 6;
   uint64 consenter_id = 7;
+  uint32 admin_port = 8;
 }
 
 enum ConsensusType {
   CONSENSUS_TYPE_UNSPECIFIED = 0;
   CONSENSUS_TYPE_RAFT = 1;
   CONSENSUS_TYPE_BFT = 2;
+}
+
+message Policy{
+  string name = 1;
+  string type = 2;
+  string rule = 3;
 }

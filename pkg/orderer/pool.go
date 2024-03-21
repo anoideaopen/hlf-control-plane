@@ -4,8 +4,6 @@ import (
 	ordPb "github.com/hyperledger/fabric-protos-go/orderer"
 )
 
-// Orderer represents the details of an orderer node,
-// including its host, port, and certificates.
 type Orderer struct {
 	Host         string
 	Port         uint32

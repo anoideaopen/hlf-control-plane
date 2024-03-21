@@ -4,21 +4,20 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
 	pb "github.com/golang/protobuf/proto" //nolint:staticcheck
+	"github.com/hyperledger/fabric-config/configtx"
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/hyperledger/fabric/common/channelconfig"
 	hlfUtil "github.com/hyperledger/fabric/common/util"
 	"github.com/hyperledger/fabric/protoutil"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
-
-const anchorPeerModPolicy = "Admins"
 
 func (s *srv) ConfigAnchorModify(ctx context.Context, req *proto.ConfigAnchorModifyRequest) (*proto.ConfigAnchorModifyResponse, error) {
 	logger := s.logger.With(zap.String("channel", req.ChannelName))
@@ -28,7 +27,7 @@ func (s *srv) ConfigAnchorModify(ctx context.Context, req *proto.ConfigAnchorMod
 		logger.Error("get endorser failed", zap.Error(err))
 		return nil, status.Errorf(codes.Internal, "get endorser failed: %v", err)
 	}
-
+	// TODO get channel config from orderer
 	/*if req.Orderer != nil {
 		s.ordPool.Get(&orderer.Orderer{
 			Host:         req.Orderer.Host,
@@ -66,7 +65,10 @@ func (s *srv) ConfigAnchorModify(ctx context.Context, req *proto.ConfigAnchorMod
 	}
 	logger.Debug("processing anchor peer update")
 	// process channel update on orderers
-	if err = s.proceedChannelUpdate(ctx, req.ChannelName, conf, updEnv); err != nil {
+
+	if err = s.sendUpdateAndCompareResult(ctx, func() error {
+		return s.channelUpdateToOneOrderer(ctx, conf, updEnv)
+	}, conf, updEnv, req.ChannelName); err != nil {
 		return nil, status.Errorf(codes.Internal, "process update: %v", err)
 	}
 
@@ -126,7 +128,7 @@ func (s *srv) createAnchorPeerUpdate(conf *common.Config, req *proto.ConfigAncho
 				// value.Version = curValue.Version + 1
 			} else {
 				s.logger.Debug("old value not found, creating new")
-				value.ModPolicy = anchorPeerModPolicy
+				value.ModPolicy = configtx.AdminsPolicyKey
 			}
 			if value.Value, err = pb.Marshal(&peer.AnchorPeers{AnchorPeers: anchorPeers}); err != nil {
 				return nil, fmt.Errorf("marshal anchor peers: %w", err)
@@ -177,46 +179,26 @@ func (s *srv) createChannelUpdateSig(env *common.ConfigUpdateEnvelope) ([]*commo
 	if err != nil {
 		return nil, err
 	}
-	return []*common.ConfigSignature{configSig}, nil
-}
-
-func (s *srv) proceedChannelUpdate(ctx context.Context, channelName string, conf *common.Config, env *common.Envelope) error {
-	orderers, consType, err := util.GetOrdererConfig(conf)
-	if err != nil {
-		return fmt.Errorf("get orderer config: %w", err)
-	}
-
-	txID, err := util.GetTxIDFromEnvelope(env)
-	if err != nil {
-		return fmt.Errorf("get txID from envelope: %w", err)
-	}
-
-	res := make(chan error)
-	ready := make(chan struct{})
-	ctx = util.NewContext(ctx, ready)
-	go func() {
-		// wait tx validation on peers
-		s.logger.Debug("wait for peer tx event", zap.String("channel", channelName), zap.String("txId", txID))
-		select {
-		case res <- s.dCli.SubscribeTxAll(ctx, channelName, txID):
-		case <-ctx.Done():
+	sigs := make([]*common.ConfigSignature, 0)
+	for _, id := range s.addIds {
+		// create signature header
+		sigHeader, err = protoutil.NewSignatureHeader(id)
+		if err != nil {
+			return nil, err
 		}
-	}()
-
-	select {
-	case <-ready:
-	case <-ctx.Done():
-		return status.Errorf(codes.Internal, "execute didn't receive block event by context cancel")
+		cSig := &common.ConfigSignature{
+			SignatureHeader: protoutil.MarshalOrPanic(sigHeader),
+		}
+		cSig.Signature, err = id.Sign(hlfUtil.ConcatenateBytes(cSig.SignatureHeader, env.ConfigUpdate))
+		if err != nil {
+			return nil, fmt.Errorf("failed to sig: %w", err)
+		}
+		sigs = append(sigs, cSig)
 	}
 
-	if err = s.sendProposalToOrderers(ctx, env, consType, orderers); err != nil {
-		return fmt.Errorf("send envelope to ordering: %w", err)
-	}
+	sigs = append(sigs, configSig)
 
-	select {
-	case err = <-res:
-		return err
-	case <-ctx.Done():
-		return status.Errorf(codes.Internal, "execute didn't receive block event by context cancel")
-	}
+	s.logger.Debug("sig length", zap.Int("len", len(sigs)))
+
+	return sigs, nil
 }

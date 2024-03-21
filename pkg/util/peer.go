@@ -8,13 +8,7 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-// EndorsePeers sends a signed proposal to a list of endorser clients and
-// collects the resulting proposal responses.
-func EndorsePeers(
-	ctx context.Context,
-	signedProp *pb.SignedProposal,
-	endCli ...pb.EndorserClient,
-) ([]*pb.ProposalResponse, error) {
+func EndorsePeers(ctx context.Context, signedProp *pb.SignedProposal, endCli ...pb.EndorserClient) ([]*pb.ProposalResponse, error) {
 	g, ctx := errgroup.WithContext(ctx)
 	responseChan := make(chan *pb.ProposalResponse)
 	for _, cli := range endCli {

@@ -6,11 +6,10 @@ import (
 	"sort"
 	"sync"
 
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/lifecycle"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/lifecycle"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type installedResult struct {
@@ -19,7 +18,7 @@ type installedResult struct {
 	err  error
 }
 
-func (s *srv) ChaincodeInstalled(ctx context.Context, _ *emptypb.Empty) (*pb.ChaincodeInstalledResponse, error) {
+func (s *srv) ChaincodeInstalled(ctx context.Context, _ *pb.ChaincodeInstalledRequest) (*pb.ChaincodeInstalledResponse, error) {
 	resultChan := make(chan installedResult)
 	var wg sync.WaitGroup
 	for _, p := range s.localPeers {

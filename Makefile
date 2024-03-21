@@ -9,3 +9,7 @@ build:
 build-tools:
 	@echo "Installing tools"
 	@cd tools && cat tools.go | grep _ | awk -F'"' '{print $$2}' | xargs -tI % go install %
+
+protobuf:
+	@echo "Generating code based on protobuf"
+	@bin/buf generate proto -o proto

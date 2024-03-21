@@ -3,17 +3,16 @@ package plane
 import (
 	"context"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
 	"github.com/imdario/mergo"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (s *srv) ConfigOrderingUpdate(ctx context.Context, req *pb.ConfigOrderingUpdateRequest) (*emptypb.Empty, error) {
+func (s *srv) ConfigOrderingUpdate(ctx context.Context, req *pb.ConfigOrderingUpdateRequest) (*pb.ConfigOrderingUpdateResponse, error) {
 	logger := s.logger.With(zap.String("channel", req.ChannelName))
 
 	logger.Debug("get channel config", zap.String("channel", req.ChannelName))
@@ -36,18 +35,21 @@ func (s *srv) ConfigOrderingUpdate(ctx context.Context, req *pb.ConfigOrderingUp
 	}
 	s.logger.Debug("got orderer config", zap.Int("orderers", len(orderers)), zap.String("consensus", consType.String()))
 
-	newOrd := make([]*pb.Orderer, 0)
+	newOrd := make([]*pb.Orderer, 0, len(orderers))
+	var editOrd *pb.Orderer
 	for _, ord := range orderers {
-		if ord.Host == req.Orderer.Host && ord.Port == req.Orderer.Port {
-			if err = mergo.Merge(req.Orderer, ord); err != nil {
+		if ord.Host == req.Orderer.Host && ord.Port == req.Orderer.Port ||
+			ord.ConsenterId == req.Orderer.ConsenterId {
+			if err = mergo.Merge(ord, req.Orderer, mergo.WithOverride); err != nil {
 				return nil, status.Errorf(codes.Internal, "merge values: %v", err)
 			}
+			editOrd = ord
 		}
 		newOrd = append(newOrd, ord)
 	}
 
-	if err = s.proceedOrderingConsenterUpdate(ctx, req.ChannelName, config, newOrd); err != nil {
+	if err = s.proceedOrderingConsenterUpdate(ctx, req.ChannelName, config, newOrd, editOrd); err != nil {
 		return nil, status.Errorf(codes.Internal, "proceed update: %v", err)
 	}
-	return &emptypb.Empty{}, nil
+	return &pb.ConfigOrderingUpdateResponse{}, nil
 }

@@ -1,10 +1,11 @@
 syntax = "proto3";
 
 package proto;
-option go_package = "github.com/atomyze-foundation/hlf-control-plane/proto";
+option go_package = "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto";
 
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "peer/configuration.proto";
+import "orderer/smartbft/configuration.proto";
 import "common.proto";
 
 // Request and response for anchor peer list method
@@ -51,14 +52,54 @@ message ConfigOrderingAddRequest {
   Orderer orderer = 2;
 }
 
+message ConfigOrderingAddResponse{}
+
 // Request and response for ordering modify method
 message ConfigOrderingUpdateRequest {
   string channel_name = 1;
   Orderer orderer = 2;
 }
 
+message ConfigOrderingUpdateResponse{}
+
 // Request and response for ordering deletion method
 message ConfigOrderingDeleteRequest {
   string channel_name = 1;
   Orderer orderer = 2;
+}
+
+message ConfigOrderingDeleteResponse{}
+
+message ConfigSmartBFTGetRequest{
+  string channel_name = 1;
+}
+
+message ConfigSmartBFTGetResponse{
+  smartbft.Options options = 1;
+}
+
+message ConfigSmartBFTSetRequest{
+  string channel_name = 1;
+  smartbft.Options options = 2;
+}
+
+message ConfigSmartBFTSetResponse{}
+
+
+message ConfigOrganizationDeleteRequest{
+  string channel_name = 1;
+  string organization = 2;
+  string section = 3;
+}
+
+message ConfigOrganizationDeleteResponse {
+  bool existed = 1;
+}
+
+message ConfigGetRequest {
+  string channel_name = 1;
+}
+
+message ConfigGetResponse {
+  bytes config = 1;
 }

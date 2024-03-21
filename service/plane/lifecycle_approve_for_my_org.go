@@ -3,23 +3,22 @@ package plane
 import (
 	"context"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
-	"github.com/atomyze-foundation/hlf-control-plane/system/lifecycle"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/hyperledger/fabric/common/policydsl"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/lifecycle"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func (s *srv) LifecycleApproveForMyOrg( //nolint:funlen
 	ctx context.Context,
 	req *pb.LifecycleApproveForMyOrgRequest,
-) (*emptypb.Empty, error) {
+) (*pb.LifecycleApproveForMyOrgResponse, error) {
 	logger := s.logger.With(
 		zap.String("chaincode", req.ChaincodeName),
 		zap.String("channel", req.ChannelName),
@@ -150,5 +149,5 @@ func (s *srv) LifecycleApproveForMyOrg( //nolint:funlen
 
 	logger.Debug("chaincode is approved")
 
-	return &emptypb.Empty{}, nil
+	return &pb.LifecycleApproveForMyOrgResponse{}, nil
 }
