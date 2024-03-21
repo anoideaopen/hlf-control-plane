@@ -15,7 +15,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/models"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/models"
 )
 
 // OrderingConfigUpdateReader is a Reader for the OrderingConfigUpdate structure.

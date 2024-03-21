@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
+	"github.com/atomyze-foundation/hlf-control-plane/system/qscc"
 	pp "github.com/hyperledger/fabric-protos-go/peer"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/qscc"
 	"go.uber.org/zap"
 	"golang.org/x/sync/errgroup"
 )

@@ -3,10 +3,10 @@ package integration
 import (
 	"testing"
 
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/configuration"
 	"github.com/ozontech/allure-go/pkg/allure"
 	"github.com/ozontech/allure-go/pkg/framework/provider"
 	"github.com/ozontech/allure-go/pkg/framework/runner"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/configuration"
 )
 
 func TestConfigAnchorList(t *testing.T) {

@@ -3,11 +3,11 @@ package integration
 import (
 	"testing"
 
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/channels"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/models"
 	"github.com/ozontech/allure-go/pkg/allure"
 	"github.com/ozontech/allure-go/pkg/framework/provider"
 	"github.com/ozontech/allure-go/pkg/framework/runner"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/channels"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/models"
 )
 
 const expectedPeer = "test-peer-001.org0:7051"

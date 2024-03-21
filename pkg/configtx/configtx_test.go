@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"testing"
 
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-config/protolator"
 	cb "github.com/hyperledger/fabric-protos-go/common"
 	"github.com/stretchr/testify/assert"
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 )
 
 const (

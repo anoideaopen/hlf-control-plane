@@ -7,8 +7,8 @@ import (
 	"io"
 	"net/http"
 
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/hyperledger/fabric/integration/channelparticipation"
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

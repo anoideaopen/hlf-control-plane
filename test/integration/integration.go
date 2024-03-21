@@ -6,10 +6,10 @@ import (
 
 	"github.com/jdxcode/netrc"
 
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client"
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client"
 )
 
 const (

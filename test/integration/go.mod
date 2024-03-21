@@ -1,4 +1,4 @@
-module gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration
+module github.com/atomyze-foundation/hlf-control-plane/test/integration
 
 go 1.18
 

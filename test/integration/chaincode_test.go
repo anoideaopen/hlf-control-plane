@@ -6,10 +6,10 @@ import (
 
 	"github.com/ozontech/allure-go/pkg/allure"
 
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/chaincode"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/models"
 	"github.com/ozontech/allure-go/pkg/framework/provider"
 	"github.com/ozontech/allure-go/pkg/framework/runner"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/chaincode"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/models"
 )
 
 func basicAuth(username, password string) string {

@@ -6,10 +6,10 @@ import (
 	"math"
 	"testing"
 
+	"github.com/atomyze-foundation/hlf-control-plane/test/mocks"
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/orderer"
 	"github.com/stretchr/testify/assert"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/mocks"
 	"go.uber.org/zap"
 )
 

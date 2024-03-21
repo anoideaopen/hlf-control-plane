@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"time"
 
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-config/configtx"
 	"github.com/hyperledger/fabric-config/configtx/membership"
@@ -16,7 +17,6 @@ import (
 	"github.com/hyperledger/fabric-protos-go/orderer/smartbft"
 	"github.com/hyperledger/fabric/msp"
 	"github.com/hyperledger/fabric/protoutil"
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 )
 
 func CreateGenesisBlock(req *pb.ChannelCreateRequest) ([]byte, error) {

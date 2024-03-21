@@ -6,8 +6,8 @@ import (
 	"sort"
 	"sync"
 
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/lifecycle"
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/atomyze-foundation/hlf-control-plane/system/lifecycle"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

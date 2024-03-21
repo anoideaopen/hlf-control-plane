@@ -3,6 +3,9 @@ package plane
 import (
 	"context"
 
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-config/configtx"
 	"github.com/hyperledger/fabric-protos-go/common"
@@ -10,9 +13,6 @@ import (
 	"github.com/hyperledger/fabric-protos-go/orderer/smartbft"
 	"github.com/hyperledger/fabric/common/channelconfig"
 	"github.com/hyperledger/fabric/protoutil"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

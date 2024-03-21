@@ -10,12 +10,12 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/chaincode"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/channels"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/configuration"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/discovery"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/lifecycle"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/ordering"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/chaincode"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/channels"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/configuration"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/discovery"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/lifecycle"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/ordering"
 )
 
 // Default hlf control plane HTTP client.

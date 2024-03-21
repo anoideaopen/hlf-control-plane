@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/models"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/models"
 )
 
 // ChaincodeInstallReader is a Reader for the ChaincodeInstall structure.

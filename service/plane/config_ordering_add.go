@@ -8,6 +8,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/orderer"
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	fbMsp "github.com/hyperledger/fabric-protos-go/msp"
@@ -18,10 +22,6 @@ import (
 	"github.com/hyperledger/fabric/common/configtx"
 	"github.com/hyperledger/fabric/msp"
 	"github.com/hyperledger/fabric/protoutil"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/orderer"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

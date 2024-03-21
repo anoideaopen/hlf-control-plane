@@ -5,12 +5,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/configuration"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/client/lifecycle"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/models"
 	"github.com/ozontech/allure-go/pkg/allure"
 	"github.com/ozontech/allure-go/pkg/framework/provider"
 	"github.com/ozontech/allure-go/pkg/framework/runner"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/configuration"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/client/lifecycle"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/models"
 )
 
 // TestChannelGetLifecycleNoChaincode - Trying to get lifecycle no chaincode

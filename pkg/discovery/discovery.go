@@ -3,8 +3,8 @@ package discovery
 import (
 	"context"
 
+	"github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/hyperledger/fabric-protos-go/discovery"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 )
 
 type Client interface {

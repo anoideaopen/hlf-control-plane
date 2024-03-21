@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/peer"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
 )
 
 func (c *cli) GetChannelConfigBlock(ctx context.Context, channelName string) (*common.Block, error) {

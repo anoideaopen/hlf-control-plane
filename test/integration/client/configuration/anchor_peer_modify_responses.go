@@ -17,7 +17,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/test/integration/models"
+	"github.com/atomyze-foundation/hlf-control-plane/test/integration/models"
 )
 
 // AnchorPeerModifyReader is a Reader for the AnchorPeerModify structure.

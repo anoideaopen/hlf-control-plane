@@ -3,12 +3,12 @@ package plane
 import (
 	"crypto/tls"
 
+	sd "github.com/atomyze-foundation/hlf-control-plane/pkg/delivery"
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/discovery"
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/orderer"
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
+	"github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/hyperledger/fabric/protoutil"
-	sd "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/delivery"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/discovery"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/orderer"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"go.uber.org/zap"
 )
 

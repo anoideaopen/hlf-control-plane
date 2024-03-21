@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/atomyze-foundation/hlf-control-plane/pkg/configtx"
+	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/hyperledger/fabric/orderer/common/types"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/configtx"
-	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

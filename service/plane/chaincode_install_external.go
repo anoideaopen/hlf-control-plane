@@ -11,10 +11,10 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/atomyze-foundation/hlf-control-plane/proto"
 	"github.com/hashicorp/go-multierror"
 	"github.com/hyperledger/fabric/core/chaincode/persistence"
 	"github.com/hyperledger/fabric/core/container/externalbuilder"
-	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
