@@ -34,7 +34,6 @@ require (
 	github.com/Microsoft/hcsshim v0.9.6 // indirect
 	github.com/Shopify/sarama v1.22.1 // indirect
 	github.com/VictoriaMetrics/fastcache v1.12.1 // indirect
-	github.com/acroca/go-symbols v0.1.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/consensys/gnark-crypto v0.6.0 // indirect
 	github.com/containerd/cgroups v1.0.3 // indirect
@@ -68,7 +67,6 @@ require (
 	github.com/moby/sys/mountinfo v0.5.0 // indirect
 	github.com/moby/term v0.0.0-20221128092401-c43b287e0e0f // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
-	github.com/nsf/gocode v0.0.0-20230322162601-b672b49f3818 // indirect
 	github.com/nxadm/tail v1.4.4 // indirect
 	github.com/onsi/ginkgo v1.14.0 // indirect
 	github.com/onsi/gomega v1.10.3 // indirect
@@ -78,7 +76,6 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.7 // indirect
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/ramya-rao-a/go-outline v0.0.0-20210608161538-9736a4bde949 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/afero v1.9.4 // indirect
