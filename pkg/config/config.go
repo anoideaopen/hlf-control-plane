@@ -16,12 +16,12 @@ type Config struct {
 	TLS         *TLSCredentials `yaml:"tls"`
 	Peers       []*peer.Peer    `yaml:"peers"`
 
-	// Ids - наборы сертификатов других организаций.
-	// Сделано потому что мы еще не решили как распростронять артефакты:
-	// - "предложения об обновлении канала"
-	// - генезис блоки новых каналов
-	// - подписи артефактов от организаций
-	// NB! - это временное решение, от которого в будущем надо отказаться
+	// Ids - other Orgs
+	// We have no idea about some artifacts translate
+	// - channel update proposal
+	// - new channel genesis blocks
+	// - artifacts signs
+	// NB! - temprorary solution, nice to refactoring
 	Ids []*Identity `yaml:"ids"`
 
 	Listen struct {

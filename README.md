@@ -63,8 +63,8 @@ tls:
 
 # List of peers managed by organization
 peers:
-  - host: peer1.atomyze.stage.core.n-t.io:7051
-  - host: peer2.atomyze.stage.core.n-t.io:7051
+  - host: peer1.org1.org:7051
+  - host: peer2.org1.org:7051
 
 # ports configuration fo grpc and http
 listen:
