@@ -16,12 +16,9 @@ type Config struct {
 	TLS         *TLSCredentials `yaml:"tls"`
 	Peers       []*peer.Peer    `yaml:"peers"`
 
-	// Ids - other Orgs
-	// We have no idea about some artifacts translate
-	// - channel update proposal
-	// - new channel genesis blocks
-	// - artifacts signs
-	// NB! - temprorary solution, nice to refactoring
+	// Ids - serts of Other orgs in Identity slice
+
+	// NB! - Ought to make a mechanism of signs and artifacts of other Orgs translate
 	Ids []*Identity `yaml:"ids"`
 
 	Listen struct {

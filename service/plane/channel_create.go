@@ -34,7 +34,7 @@ func (s *srv) ChannelCreate(
 	resp := &pb.ChannelCreateResponse{}
 
 	for _, org := range req.GetOrganizations() {
-		// Join our MSPID
+
 		if org.Id != s.mspID {
 			continue
 		}
