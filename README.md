@@ -1,29 +1,35 @@
 # hlf-control-plane
 
+
+### !!Disclaimer!!
+
+Please note the repo is in syncing mode now Due to some integration and testing issues the source is in closed system. We are planning to come into Github only in May 2024
+
+
 ## TOC
 
 - [hlf-control-plane](#hlf-control-plane)
-    - [TOC](#toc)
-    - [Description](#description)
-    - [OpenAPI](#open-api)
-    - [Configuration](#configuration)
-    - [Monitoring](#monitoring)
-    - [Development](#development)
-        - [Utils](#utils)
-        - [Protobuf management](#protobuf)
-        - [Code generation](#code-generation)
-    - [License](#license)
-    - [Links](#links)
+    - [!!Disclaimer!!](#disclaimer)
+  - [TOC](#toc)
+  - [Description](#description)
+  - [Open API](#open-api)
+  - [Configuration](#configuration)
+  - [Monitoring](#monitoring)
+  - [Development](#development)
+    - [Utils](#utils)
+    - [Protobuf](#protobuf)
+    - [Code generation](#code-generation)
+  - [License](#license)
+  - [Links](#links)
 
 ## Description
 
-Утилита- сервис предоставляющая упрощенный доступ к администраторским функциям fabric, как например создание каналов,
-инсталляция чейнкодов, апдейт каналов #admin#chaincode#deploy#hlf#controlplane#
+Tool service for administraive function of fabric net: channel creation, chainconde install, etc
+#admin#chaincode#deploy#hlf#controlplane#
 
 ## Open API
 
-Сервис предоставляет функционал OpenAPI(Swagger). Список методов и форматов запросов доступен
-по [ссылке](proto/plane.swagger.json)
+The service has an API.  Specs see in Swagger(proto/plane.swagger.json),     
 
 ## Configuration
 
@@ -68,7 +74,7 @@ listen:
 
 ## Monitoring
 
-Сервис содержит встроенный механизм **healthcheck**, доступный без авторизации по пути `/v1/healthz`, возвращающий информацию следующего вида:
+Service has a  **healthcheck** endpoint without authorisation: `/v1/healthz` with answer:
 ```json
 {
   "status": "SERVING"
