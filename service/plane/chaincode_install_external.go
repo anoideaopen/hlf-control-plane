@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/proto"
 	"github.com/hashicorp/go-multierror"
 	"github.com/hyperledger/fabric/core/chaincode/persistence"
 	"github.com/hyperledger/fabric/core/container/externalbuilder"

@@ -3,10 +3,10 @@ package plane
 import (
 	"context"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
-	"github.com/atomyze-foundation/hlf-control-plane/system/lifecycle"
+	"github.com/anoideaopen/hlf-control-plane/pkg/util"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/system/cscc"
+	"github.com/anoideaopen/hlf-control-plane/system/lifecycle"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/hyperledger/fabric/common/policydsl"

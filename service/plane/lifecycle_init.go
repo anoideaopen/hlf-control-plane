@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

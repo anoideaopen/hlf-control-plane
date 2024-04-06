@@ -6,8 +6,8 @@ import (
 	"sort"
 	"sync"
 
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/lifecycle"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/system/lifecycle"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"

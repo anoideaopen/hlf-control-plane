@@ -3,7 +3,7 @@ package plane
 import (
 	"context"
 
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

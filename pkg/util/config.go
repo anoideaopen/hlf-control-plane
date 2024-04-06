@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/msp"

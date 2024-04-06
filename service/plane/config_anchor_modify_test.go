@@ -3,7 +3,7 @@ package plane
 import (
 	"testing"
 
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/proto"
 	"github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/stretchr/testify/assert"
 )

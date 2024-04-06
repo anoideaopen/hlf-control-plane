@@ -3,9 +3,9 @@ package plane
 import (
 	"context"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
+	"github.com/anoideaopen/hlf-control-plane/pkg/util"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/system/cscc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

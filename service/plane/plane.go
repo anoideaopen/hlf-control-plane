@@ -1,11 +1,11 @@
 package plane
 
 import (
-	sd "github.com/atomyze-foundation/hlf-control-plane/pkg/delivery"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/discovery"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/orderer"
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
+	sd "github.com/anoideaopen/hlf-control-plane/pkg/delivery"
+	"github.com/anoideaopen/hlf-control-plane/pkg/discovery"
+	"github.com/anoideaopen/hlf-control-plane/pkg/orderer"
+	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
+	"github.com/anoideaopen/hlf-control-plane/proto"
 	"github.com/hyperledger/fabric/protoutil"
 	"go.uber.org/zap"
 )

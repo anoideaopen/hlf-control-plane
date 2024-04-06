@@ -3,8 +3,8 @@ package plane
 import (
 	"context"
 
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/lifecycle"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/system/lifecycle"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/peer"
 	lb "github.com/hyperledger/fabric-protos-go/peer/lifecycle"

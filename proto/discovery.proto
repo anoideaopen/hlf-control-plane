@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package proto;
-option go_package = "github.com/atomyze-foundation/hlf-control-plane/proto";
+option go_package = "github.com/anoideaopen/hlf-control-plane/proto";
 
 import "discovery/protocol.proto";
 import "google/protobuf/timestamp.proto";

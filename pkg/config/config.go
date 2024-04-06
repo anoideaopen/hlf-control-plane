@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"os"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
+	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
 	"go.uber.org/config"
 )
 

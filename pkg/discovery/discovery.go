@@ -3,7 +3,7 @@ package discovery
 import (
 	"context"
 
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/proto"
 	"github.com/hyperledger/fabric-protos-go/discovery"
 )
 

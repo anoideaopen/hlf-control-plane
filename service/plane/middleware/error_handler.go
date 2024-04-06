@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/proto"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/status"

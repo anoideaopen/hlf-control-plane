@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
+	"github.com/anoideaopen/hlf-control-plane/pkg/util"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/peer"

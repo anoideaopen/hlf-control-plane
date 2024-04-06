@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/util"
-	pb "github.com/atomyze-foundation/hlf-control-plane/proto"
-	"github.com/atomyze-foundation/hlf-control-plane/system/cscc"
+	"github.com/anoideaopen/hlf-control-plane/pkg/util"
+	pb "github.com/anoideaopen/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/system/cscc"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/orderer"

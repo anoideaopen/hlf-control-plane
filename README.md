@@ -29,15 +29,15 @@ The service provides OpenAPI (Swagger) functionality. The list of methods and re
 
 ```yaml
 # Msp ID of your organization
-mspId: atomyzeMSP
+mspId: testnetMSP
 # Logging level
 logLevel: debug
 # Access token value
 accessToken: "my_awesome_token"
 # Path to the certificate and private key of your identity
 identity:
-  cert: certs/atomyze_admin.pem
-  key: certs/atomyze_admin_key.pem
+  cert: certs/admin.pem
+  key: certs/admin_key.pem
 # or bccsp config of pkcs11
 #  bccsp:
 #    Default: PKCS11
@@ -57,8 +57,8 @@ tls:
 
 # List of peers managed by organization
 peers:
-  - host: peer1.atomyze.io:7051
-  - host: peer2.atomyze.io:7051
+  - host: peer1.ideatestnet.io:7051
+  - host: peer2.ideatestnet.io:7051
 
 # ports configuration for grpc and http
 listen:

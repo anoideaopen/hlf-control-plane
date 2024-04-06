@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 
-	"github.com/atomyze-foundation/hlf-control-plane/system/pkcs11"
+	"github.com/anoideaopen/hlf-control-plane/system/pkcs11"
 	"github.com/hyperledger/fabric/bccsp/factory"
 	"github.com/hyperledger/fabric/cmd/common/signer"
 	"github.com/hyperledger/fabric/protoutil"

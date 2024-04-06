@@ -5,7 +5,7 @@ FROM $BUILDER_IMAGE:$BUILDER_VERSION AS builder
 
 WORKDIR /go/src/app
 
-ENV GOPRIVATE="github.com/atomyze-foundation/*"
+ENV GOPRIVATE="github.com/anoideaopen/*"
 ARG NETRC="machine github.com login REGISTRY_USERNAME password REGISTRY_PASSWORD"
 ARG VERSION=unknown
 

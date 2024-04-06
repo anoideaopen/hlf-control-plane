@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/atomyze-foundation/hlf-control-plane/pkg/peer"
-	"github.com/atomyze-foundation/hlf-control-plane/proto"
+	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
+	"github.com/anoideaopen/hlf-control-plane/proto"
 	fd "github.com/hyperledger/fabric-protos-go/discovery"
 	pb "github.com/hyperledger/fabric-protos-go/peer"
 	discovery "github.com/hyperledger/fabric/discovery/client"
