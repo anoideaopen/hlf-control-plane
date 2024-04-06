@@ -7,10 +7,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/matcher"
 	"github.com/hyperledger/fabric-protos-go/discovery"
 	pb "github.com/hyperledger/fabric-protos-go/peer"
 	cutil "github.com/hyperledger/fabric/common/util"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/matcher"
 	"go.uber.org/multierr"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -25,7 +25,6 @@ type grpcPool struct {
 	l       *zap.Logger
 }
 
-// GetEndorser retrieves an endorser gRPC client for a specific peer.
 func (p *grpcPool) GetEndorser(ctx context.Context, peer *Peer) (pb.EndorserClient, error) {
 	key := p.getPeerMapKey(peer)
 	p.connMx.RLock()
@@ -51,7 +50,6 @@ func (p *grpcPool) GetEndorser(ctx context.Context, peer *Peer) (pb.EndorserClie
 	return pb.NewEndorserClient(conn), nil
 }
 
-// GetRandomEndorser retrieves a random endorser gRPC client for a specific MSP ID.
 func (p *grpcPool) GetRandomEndorser(_ context.Context, mspID string) (pb.EndorserClient, error) {
 	p.connMx.RLock()
 	defer p.connMx.RUnlock()
@@ -64,7 +62,6 @@ func (p *grpcPool) GetRandomEndorser(_ context.Context, mspID string) (pb.Endors
 	return nil, fmt.Errorf("no peers found")
 }
 
-// GetDeliver retrieves a deliver gRPC client for a specific peer.
 func (p *grpcPool) GetDeliver(ctx context.Context, peer *Peer) (pb.DeliverClient, error) {
 	key := p.getPeerMapKey(peer)
 	p.connMx.RLock()
@@ -96,7 +93,6 @@ func (p *grpcPool) GetDeliver(ctx context.Context, peer *Peer) (pb.DeliverClient
 	return pb.NewDeliverClient(conn), nil
 }
 
-// GetConnection retrieves a gRPC client connection for a specific MSP ID.
 func (p *grpcPool) GetConnection(mspID string) (*grpc.ClientConn, []byte, error) {
 	p.connMx.RLock()
 	defer p.connMx.RUnlock()
@@ -112,7 +108,6 @@ func (p *grpcPool) GetConnection(mspID string) (*grpc.ClientConn, []byte, error)
 	return nil, nil, fmt.Errorf("no connections found")
 }
 
-// GetDiscoveryClient retrieves a discovery client for a specific MSP ID.
 func (p *grpcPool) GetDiscoveryClient(mspID string) (discovery.DiscoveryClient, error) {
 	p.connMx.RLock()
 	defer p.connMx.RUnlock()
@@ -124,7 +119,6 @@ func (p *grpcPool) GetDiscoveryClient(mspID string) (discovery.DiscoveryClient, 
 	return nil, fmt.Errorf("no peers found")
 }
 
-// Close closes all the gRPC client connections managed by the pool.
 func (p *grpcPool) Close() error {
 	p.connMx.Lock()
 	defer p.connMx.Unlock()
@@ -159,7 +153,6 @@ func (p *grpcPool) getPeerMapKey(peer *Peer) string {
 	return fmt.Sprintf("%s_%s%d", peer.MspID, peer.Host, peer.Port)
 }
 
-// NewGrpcPool creates a new gRPC connection pool for peer nodes.
 func NewGrpcPool(ctx context.Context, logger *zap.Logger, tlsConf *tls.Config, localPeers []*Peer, _ *matcher.Matcher) (Pool, error) {
 	pool := &grpcPool{connMap: make(map[string]*grpc.ClientConn), tlsConf: tlsConf, l: logger.Named("peer_pool")}
 	for _, p := range localPeers {

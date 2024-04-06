@@ -10,12 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/orderer"
-	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
-	"github.com/anoideaopen/hlf-control-plane/pkg/util"
-	pb "github.com/anoideaopen/hlf-control-plane/proto"
-	"github.com/anoideaopen/hlf-control-plane/system/cscc"
-	"github.com/anoideaopen/hlf-control-plane/system/lifecycle"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	ab "github.com/hyperledger/fabric-protos-go/orderer"
@@ -24,6 +18,12 @@ import (
 	"github.com/hyperledger/fabric/common/policydsl"
 	hlfUtil "github.com/hyperledger/fabric/common/util"
 	"github.com/hyperledger/fabric/protoutil"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/orderer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/lifecycle"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -604,14 +604,7 @@ func (s *srv) getPeersAndOrderersFromConf(ctx context.Context, endCli pp.Endorse
 	return peers, orderers, consType, nil
 }
 
-// GetEndorsersFromDiscovery retrieves a list of endorser clients
-// from a given peer pool based on discovery information.
-func GetEndorsersFromDiscovery(
-	ctx context.Context,
-	peerPool peer.Pool,
-	peersCfg []*peer.Peer,
-	peersDis []*pb.DiscoveryPeer,
-) ([]pp.EndorserClient, error) {
+func GetEndorsersFromDiscovery(ctx context.Context, peerPool peer.Pool, peersCfg []*peer.Peer, peersDis []*pb.DiscoveryPeer) ([]pp.EndorserClient, error) {
 	peers := make([]*peer.Peer, 0, len(peersDis))
 
 m1:

@@ -4,11 +4,10 @@ import (
 	"bytes"
 	"os"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
 	"go.uber.org/config"
 )
 
-// Config defines the configuration structure for your hlf-control-plane app.
 type Config struct {
 	LogLevel    string          `yaml:"logLevel"`
 	AccessToken string          `yaml:"accessToken"`
@@ -16,6 +15,14 @@ type Config struct {
 	Identity    *Identity       `yaml:"identity"`
 	TLS         *TLSCredentials `yaml:"tls"`
 	Peers       []*peer.Peer    `yaml:"peers"`
+
+	// Ids - наборы сертификатов других организаций.
+	// Сделано потому что мы еще не решили как распростронять артефакты:
+	// - "предложения об обновлении канала"
+	// - генезис блоки новых каналов
+	// - подписи артефактов от организаций
+	// NB! - это временное решение, от которого в будущем надо отказаться
+	Ids []*Identity `yaml:"ids"`
 
 	Listen struct {
 		HTTP string `yaml:"http"`

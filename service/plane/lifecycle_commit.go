@@ -6,24 +6,23 @@ import (
 	"strings"
 	"time"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/util"
-	pb "github.com/anoideaopen/hlf-control-plane/proto"
-	"github.com/anoideaopen/hlf-control-plane/system/lifecycle"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/peer"
 	lb "github.com/hyperledger/fabric-protos-go/peer/lifecycle"
 	"github.com/hyperledger/fabric/common/policydsl"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/lifecycle"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func (s *srv) LifecycleCommit( //nolint:funlen
 	ctx context.Context,
 	req *pb.LifecycleCommitRequest,
-) (*emptypb.Empty, error) {
+) (*pb.LifecycleCommitResponse, error) {
 	logger := s.logger.With(
 		zap.String("chaincode", req.ChaincodeName),
 		zap.String("channel", req.ChannelName),
@@ -156,5 +155,5 @@ m1:
 
 	logger.Debug("chaincode is commit")
 
-	return &emptypb.Empty{}, nil
+	return &pb.LifecycleCommitResponse{}, nil
 }

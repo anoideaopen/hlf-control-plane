@@ -4,17 +4,17 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/util"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/hyperledger/fabric/core/scc/cscc"
 	"github.com/hyperledger/fabric/protoutil"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
 )
 
 func (c *cli) GetChannelConfig(ctx context.Context, channelName string) (*common.Config, error) {
 	// create chaincode endorsement proposal
-	prop, err := c.getGetChannelConfigProposal(channelName)
+	prop, err := c.getChannelConfigProposal(channelName)
 	if err != nil {
 		return nil, fmt.Errorf("get proposal: %w", err)
 	}
@@ -33,13 +33,13 @@ func (c *cli) GetChannelConfig(ctx context.Context, channelName string) (*common
 	return config, nil
 }
 
-func (c *cli) getGetChannelConfigProposal(channelName string) (*peer.Proposal, error) {
+func (c *cli) getCSCCProposal(channelName, operation string) (*peer.Proposal, error) {
 	// query cscc for chain config block
 	invocation := &peer.ChaincodeInvocationSpec{
 		ChaincodeSpec: &peer.ChaincodeSpec{
 			Type:        peer.ChaincodeSpec_Type(peer.ChaincodeSpec_Type_value["GOLANG"]),
 			ChaincodeId: &peer.ChaincodeID{Name: "cscc"},
-			Input:       &peer.ChaincodeInput{Args: [][]byte{[]byte(cscc.GetChannelConfig), []byte(channelName)}},
+			Input:       &peer.ChaincodeInput{Args: [][]byte{[]byte(operation), []byte(channelName)}},
 		},
 	}
 	creator, err := c.id.Serialize()
@@ -52,6 +52,14 @@ func (c *cli) getGetChannelConfigProposal(channelName string) (*peer.Proposal, e
 		return nil, fmt.Errorf("cannot create proposal, due to %w", err)
 	}
 	return prop, nil
+}
+
+func (c *cli) getChannelConfigBlockProposal(channelName string) (*peer.Proposal, error) {
+	return c.getCSCCProposal(channelName, cscc.GetConfigBlock)
+}
+
+func (c *cli) getChannelConfigProposal(channelName string) (*peer.Proposal, error) {
+	return c.getCSCCProposal(channelName, cscc.GetChannelConfig)
 }
 
 func (c *cli) processGetChannelConfigProposal(ctx context.Context, prop *peer.SignedProposal) (*common.Config, error) {

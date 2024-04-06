@@ -4,17 +4,16 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/anoideaopen/hlf-control-plane/proto"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func (s *srv) LifecycleInit(
 	ctx context.Context,
 	req *pb.LifecycleInitRequest,
-) (*emptypb.Empty, error) {
+) (*pb.LifecycleInitResponse, error) {
 	logger := s.logger.With(
 		zap.String("chaincode", req.ChaincodeName),
 		zap.String("channel", req.ChannelName),
@@ -49,5 +48,5 @@ func (s *srv) LifecycleInit(
 
 	logger.Debug("chaincode is Init")
 
-	return &emptypb.Empty{}, nil
+	return &pb.LifecycleInitResponse{}, nil
 }

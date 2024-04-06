@@ -10,7 +10,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-// Peer represents a peer node in a blockchain network.
 type Peer struct {
 	Host              string
 	Port              int32

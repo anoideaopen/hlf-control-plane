@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package proto;
-option go_package = "github.com/anoideaopen/hlf-control-plane/proto";
+option go_package = "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto";
 
 import "protoc-gen-openapiv2/options/annotations.proto";
 
@@ -28,13 +28,21 @@ message ChaincodeInstallResponse {
     string label = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Label of installed chaincode package"}];
   }
   repeated Result result = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Result of installation for each peer"}];
+  string package_id = 2;
 }
 
 message ChaincodeInstallExternalRequest {
   string type = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "External chaincode type"}];
   string label = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Label for chaincode"}];
 
-  string base_domain = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Base domain for"}];
+  string address = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Base domain for"}];
+  string timeout = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Connection timeout duration"}];
+  bool tls_required = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Flag of tls required"}];
+  bool tls_client_auth = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Flag of tls client auth required"}];
+  bytes tls_key = 7;
+  bytes tls_cert = 8;
+  bytes tls_root_cert = 9;
+  bool enable_conn_check = 10;
 }
 
 message ChaincodeInstalledResponse{
@@ -45,3 +53,5 @@ message ChaincodeInstalledResponse{
   }
   repeated Result result = 1;
 }
+
+message ChaincodeInstalledRequest{}

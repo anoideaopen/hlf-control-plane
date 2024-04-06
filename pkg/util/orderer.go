@@ -12,13 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// GetSeekEnvelope creates a signed envelope containing a seek request for a specific channel.
-func GetSeekEnvelope(
-	channelName string,
-	id protoutil.Signer,
-	seekInfo *orderer.SeekInfo,
-	tlsCertHash []byte,
-) (*common.Envelope, error) {
+func GetSeekEnvelope(channelName string, id protoutil.Signer, seekInfo *orderer.SeekInfo, tlsCertHash []byte) (*common.Envelope, error) {
 	env, err := protoutil.CreateSignedEnvelopeWithTLSBinding(
 		common.HeaderType_DELIVER_SEEK_INFO,
 		channelName,
@@ -35,7 +29,6 @@ func GetSeekEnvelope(
 	return env, nil
 }
 
-// GetSeekOldestEnvelope creates a seek request envelope for the oldest available block on a channel.
 func GetSeekOldestEnvelope(channelName string, id protoutil.Signer) (*common.Envelope, error) {
 	pos := &orderer.SeekPosition{
 		Type: &orderer.SeekPosition_Oldest{
@@ -43,13 +36,28 @@ func GetSeekOldestEnvelope(channelName string, id protoutil.Signer) (*common.Env
 		},
 	}
 	return GetSeekEnvelope(channelName, id, &orderer.SeekInfo{
-		Start:    pos,
-		Stop:     pos,
-		Behavior: orderer.SeekInfo_BLOCK_UNTIL_READY,
+		Start:       pos,
+		Stop:        pos,
+		Behavior:    orderer.SeekInfo_BLOCK_UNTIL_READY,
+		ContentType: orderer.SeekInfo_BLOCK,
 	}, nil)
 }
 
-// GetSeekNewestEnvelope creates a seek request envelope for the newest available block on a channel.
+func GetSeekNewestEnvelopeOnlyOne(channelName string, id protoutil.Signer, tlsCertHash []byte) (*common.Envelope, error) {
+	pos := &orderer.SeekPosition{
+		Type: &orderer.SeekPosition_Newest{
+			Newest: &orderer.SeekNewest{},
+		},
+	}
+
+	return GetSeekEnvelope(channelName, id, &orderer.SeekInfo{
+		Start:       pos,
+		Stop:        pos,
+		Behavior:    orderer.SeekInfo_BLOCK_UNTIL_READY,
+		ContentType: orderer.SeekInfo_BLOCK,
+	}, tlsCertHash)
+}
+
 func GetSeekNewestEnvelope(channelName string, id protoutil.Signer, tlsCertHash []byte) (*common.Envelope, error) {
 	start := &orderer.SeekPosition{
 		Type: &orderer.SeekPosition_Newest{
@@ -71,8 +79,23 @@ func GetSeekNewestEnvelope(channelName string, id protoutil.Signer, tlsCertHash 
 	}, tlsCertHash)
 }
 
-// GetBlockFromDeliverClient receives a common.Block from an orderer.AtomicBroadcast_DeliverClient
-// and returns it.
+func GetSeekSpecifiedEnvelope(channelName string, id protoutil.Signer, number uint64, tlsCertHash []byte) (*common.Envelope, error) {
+	pos := &orderer.SeekPosition{
+		Type: &orderer.SeekPosition_Specified{
+			Specified: &orderer.SeekSpecified{
+				Number: number,
+			},
+		},
+	}
+
+	return GetSeekEnvelope(channelName, id, &orderer.SeekInfo{
+		Start:       pos,
+		Stop:        pos,
+		Behavior:    orderer.SeekInfo_BLOCK_UNTIL_READY,
+		ContentType: orderer.SeekInfo_BLOCK,
+	}, tlsCertHash)
+}
+
 func GetBlockFromDeliverClient(deliverCli orderer.AtomicBroadcast_DeliverClient) (*common.Block, error) {
 	resp, err := deliverCli.Recv()
 	if err != nil {
@@ -93,8 +116,6 @@ func GetBlockFromDeliverClient(deliverCli orderer.AtomicBroadcast_DeliverClient)
 	}
 }
 
-// OrdererBroadcast broadcasts a common.Envelope to multiple orderer nodes and
-// waits for a quorum of successful responses.
 func OrdererBroadcast(ctx context.Context, l *zap.Logger, env *common.Envelope, quorum int, ordererClients ...orderer.AtomicBroadcastClient) error {
 	var cancel context.CancelFunc
 	ctx, cancel = context.WithCancel(ctx)

@@ -197,6 +197,8 @@ func (m *ChaincodeInstallResponse) validate(all bool) error {
 
 	}
 
+	// no validation rules for PackageId
+
 	if len(errors) > 0 {
 		return ChaincodeInstallResponseMultiError(errors)
 	}
@@ -303,7 +305,21 @@ func (m *ChaincodeInstallExternalRequest) validate(all bool) error {
 
 	// no validation rules for Label
 
-	// no validation rules for BaseDomain
+	// no validation rules for Address
+
+	// no validation rules for Timeout
+
+	// no validation rules for TlsRequired
+
+	// no validation rules for TlsClientAuth
+
+	// no validation rules for TlsKey
+
+	// no validation rules for TlsCert
+
+	// no validation rules for TlsRootCert
+
+	// no validation rules for EnableConnCheck
 
 	if len(errors) > 0 {
 		return ChaincodeInstallExternalRequestMultiError(errors)
@@ -521,6 +537,108 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ChaincodeInstalledResponseValidationError{}
+
+// Validate checks the field values on ChaincodeInstalledRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ChaincodeInstalledRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ChaincodeInstalledRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ChaincodeInstalledRequestMultiError, or nil if none found.
+func (m *ChaincodeInstalledRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ChaincodeInstalledRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return ChaincodeInstalledRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ChaincodeInstalledRequestMultiError is an error wrapping multiple validation
+// errors returned by ChaincodeInstalledRequest.ValidateAll() if the
+// designated constraints aren't met.
+type ChaincodeInstalledRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ChaincodeInstalledRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ChaincodeInstalledRequestMultiError) AllErrors() []error { return m }
+
+// ChaincodeInstalledRequestValidationError is the validation error returned by
+// ChaincodeInstalledRequest.Validate if the designated constraints aren't met.
+type ChaincodeInstalledRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ChaincodeInstalledRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ChaincodeInstalledRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ChaincodeInstalledRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ChaincodeInstalledRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ChaincodeInstalledRequestValidationError) ErrorName() string {
+	return "ChaincodeInstalledRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ChaincodeInstalledRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sChaincodeInstalledRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ChaincodeInstalledRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ChaincodeInstalledRequestValidationError{}
 
 // Validate checks the field values on ChaincodeInstallResponse_Result with the
 // rules defined in the proto definition for this message. If any rules are

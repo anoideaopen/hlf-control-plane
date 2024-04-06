@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/orderer"
-	"github.com/anoideaopen/hlf-control-plane/pkg/util"
-	pb "github.com/anoideaopen/hlf-control-plane/proto"
-	"github.com/anoideaopen/hlf-control-plane/system/cscc"
 	"github.com/hyperledger/fabric-protos-go/common"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/orderer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/cscc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -25,7 +26,7 @@ func (s *srv) ChannelJoin(ctx context.Context, req *pb.ChannelJoinRequest) (*pb.
 		return nil, status.Errorf(codes.Internal, "get orderer: %v", err)
 	}
 	// get envelope for orderer deliver blocks
-	env, err := util.GetSeekOldestEnvelope(req.ChannelName, s.id)
+	env, err := util.GetSeekNewestEnvelopeOnlyOne(req.ChannelName, s.id, nil)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "get seek envelope: %v", err)
 	}
@@ -60,9 +61,8 @@ func (s *srv) processBlockJoin(ctx context.Context, channelName string, b *commo
 	resChan := make(chan *pb.ChannelJoinResponse_PeerResult)
 
 	for _, p := range s.localPeers {
-		p := p
 		wg.Add(1)
-		go func() {
+		go func(p *peer.Peer) {
 			defer wg.Done()
 			endCli, err := s.peerPool.GetEndorser(ctx, p)
 			if err != nil {
@@ -73,7 +73,7 @@ func (s *srv) processBlockJoin(ctx context.Context, channelName string, b *commo
 				return
 			}
 			s.processPeerJoin(ctx, p.String(), cscc.NewClient(endCli, s.id), channelName, b, resChan)
-		}()
+		}(p)
 	}
 
 	doneChan := make(chan struct{})

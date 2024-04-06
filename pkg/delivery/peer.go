@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
-	"github.com/anoideaopen/hlf-control-plane/pkg/util"
 	pb "github.com/hyperledger/fabric-protos-go/peer"
 	cutil "github.com/hyperledger/fabric/common/util"
 	"github.com/hyperledger/fabric/protoutil"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/util"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -21,10 +21,9 @@ type peerCli struct {
 	l     *zap.Logger
 	peers []*peer.Peer
 	pool  peer.Pool
+	mutex sync.RWMutex
 }
 
-// SubscribeTx subscribes to a specific transaction by its ID on a given channel and
-// returns the validation code of the transaction.
 func (c *peerCli) SubscribeTx(ctx context.Context, channelName string, txID string) (pb.TxValidationCode, error) {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
@@ -59,9 +58,6 @@ func (c *peerCli) SubscribeTx(ctx context.Context, channelName string, txID stri
 	return code, nil
 }
 
-// SubscribeTxAll subscribes to a specific transaction by its ID on all available peers for a given channel.
-// It checks the validation codes of the transaction responses from all peers and returns an error if any peer
-// reports an invalid transaction or if the expected number of responses is not received.
 func (c *peerCli) SubscribeTxAll(ctx context.Context, channelName string, txID string) error {
 	var wg sync.WaitGroup
 	resChan := make(chan pb.TxValidationCode)
@@ -124,7 +120,13 @@ func (c *peerCli) waitTx(ctx context.Context, wg *sync.WaitGroup, p *peer.Peer, 
 	resChan <- code
 }
 
-func (c *peerCli) getTxValidationCode(ctx context.Context, cli pb.DeliverClient, channelName string, txID string, p *peer.Peer) (pb.TxValidationCode, error) {
+func (c *peerCli) getTxValidationCode( //nolint:funlen
+	ctx context.Context,
+	cli pb.DeliverClient,
+	channelName string,
+	txID string,
+	p *peer.Peer,
+) (pb.TxValidationCode, error) {
 	dCli, err := cli.DeliverFiltered(ctx)
 	if err != nil {
 		return -1, fmt.Errorf("get deliver filtered: %w", err)
@@ -145,11 +147,26 @@ func (c *peerCli) getTxValidationCode(ctx context.Context, cli pb.DeliverClient,
 	}
 
 	if ready := util.FromContext(ctx); ready != nil {
+		var cont bool
+
+		c.mutex.RLock()
 		select {
 		case <-ready:
 			break
 		default:
-			close(ready)
+			cont = true
+		}
+		c.mutex.RUnlock()
+
+		if cont {
+			c.mutex.Lock()
+			select {
+			case <-ready:
+				break
+			default:
+				close(ready)
+			}
+			c.mutex.Unlock()
 		}
 	}
 
@@ -189,7 +206,6 @@ func (c *peerCli) sendEnvelope(cli pb.Deliver_DeliverFilteredClient, channelName
 	return cli.Send(env)
 }
 
-// NewPeer creates and returns a new peer client for interacting with peers in a network.
 func NewPeer(logger *zap.Logger, pool peer.Pool, peers []*peer.Peer, id protoutil.Signer) Client {
 	return &peerCli{l: logger.Named("delivery"), pool: pool, peers: peers, id: id}
 }

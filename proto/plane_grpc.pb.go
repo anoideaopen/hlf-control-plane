@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -25,6 +24,7 @@ const (
 	ChaincodeService_ChaincodeInstalled_FullMethodName            = "/proto.ChaincodeService/ChaincodeInstalled"
 	ChaincodeService_ChannelJoined_FullMethodName                 = "/proto.ChaincodeService/ChannelJoined"
 	ChaincodeService_ChannelJoin_FullMethodName                   = "/proto.ChaincodeService/ChannelJoin"
+	ChaincodeService_ChannelCreate_FullMethodName                 = "/proto.ChaincodeService/ChannelCreate"
 	ChaincodeService_LifecycleStatus_FullMethodName               = "/proto.ChaincodeService/LifecycleStatus"
 	ChaincodeService_LifecycleApproved_FullMethodName             = "/proto.ChaincodeService/LifecycleApproved"
 	ChaincodeService_LifecycleCheckCommitReadiness_FullMethodName = "/proto.ChaincodeService/LifecycleCheckCommitReadiness"
@@ -38,9 +38,16 @@ const (
 	ChaincodeService_ConfigOrderingAdd_FullMethodName             = "/proto.ChaincodeService/ConfigOrderingAdd"
 	ChaincodeService_ConfigOrderingUpdate_FullMethodName          = "/proto.ChaincodeService/ConfigOrderingUpdate"
 	ChaincodeService_ConfigOrderingDelete_FullMethodName          = "/proto.ChaincodeService/ConfigOrderingDelete"
+	ChaincodeService_ConfigSmartBFTGet_FullMethodName             = "/proto.ChaincodeService/ConfigSmartBFTGet"
+	ChaincodeService_ConfigSmartBFTSet_FullMethodName             = "/proto.ChaincodeService/ConfigSmartBFTSet"
+	ChaincodeService_ConfigOrganizationDelete_FullMethodName      = "/proto.ChaincodeService/ConfigOrganizationDelete"
+	ChaincodeService_ConfigGet_FullMethodName                     = "/proto.ChaincodeService/ConfigGet"
 	ChaincodeService_DiscoveryEndorsers_FullMethodName            = "/proto.ChaincodeService/DiscoveryEndorsers"
 	ChaincodeService_DiscoveryPeers_FullMethodName                = "/proto.ChaincodeService/DiscoveryPeers"
 	ChaincodeService_DiscoveryConfig_FullMethodName               = "/proto.ChaincodeService/DiscoveryConfig"
+	ChaincodeService_OrderingJoin_FullMethodName                  = "/proto.ChaincodeService/OrderingJoin"
+	ChaincodeService_OrderingListInfo_FullMethodName              = "/proto.ChaincodeService/OrderingListInfo"
+	ChaincodeService_OrderingRemove_FullMethodName                = "/proto.ChaincodeService/OrderingRemove"
 )
 
 // ChaincodeServiceClient is the client API for ChaincodeService service.
@@ -49,25 +56,33 @@ const (
 type ChaincodeServiceClient interface {
 	ChaincodeInstall(ctx context.Context, in *ChaincodeInstallRequest, opts ...grpc.CallOption) (*ChaincodeInstallResponse, error)
 	ChaincodeInstallExternal(ctx context.Context, in *ChaincodeInstallExternalRequest, opts ...grpc.CallOption) (*ChaincodeInstallResponse, error)
-	ChaincodeInstalled(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ChaincodeInstalledResponse, error)
-	ChannelJoined(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ChannelJoinedResponse, error)
+	ChaincodeInstalled(ctx context.Context, in *ChaincodeInstalledRequest, opts ...grpc.CallOption) (*ChaincodeInstalledResponse, error)
+	ChannelJoined(ctx context.Context, in *ChannelJoinedRequest, opts ...grpc.CallOption) (*ChannelJoinedResponse, error)
 	ChannelJoin(ctx context.Context, in *ChannelJoinRequest, opts ...grpc.CallOption) (*ChannelJoinResponse, error)
+	ChannelCreate(ctx context.Context, in *ChannelCreateRequest, opts ...grpc.CallOption) (*ChannelCreateResponse, error)
 	LifecycleStatus(ctx context.Context, in *LifecycleStatusRequest, opts ...grpc.CallOption) (*LifecycleStatusResponse, error)
 	LifecycleApproved(ctx context.Context, in *LifecycleApprovedRequest, opts ...grpc.CallOption) (*LifecycleApprovedResponse, error)
 	LifecycleCheckCommitReadiness(ctx context.Context, in *LifecycleCheckCommitReadinessRequest, opts ...grpc.CallOption) (*LifecycleCheckCommitReadinessResponse, error)
 	LifecycleFull(ctx context.Context, in *LifecycleFullRequest, opts ...grpc.CallOption) (*LifecycleFullResponse, error)
-	LifecycleApproveForMyOrg(ctx context.Context, in *LifecycleApproveForMyOrgRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	LifecycleCommit(ctx context.Context, in *LifecycleCommitRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	LifecycleInit(ctx context.Context, in *LifecycleInitRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	LifecycleApproveForMyOrg(ctx context.Context, in *LifecycleApproveForMyOrgRequest, opts ...grpc.CallOption) (*LifecycleApproveForMyOrgResponse, error)
+	LifecycleCommit(ctx context.Context, in *LifecycleCommitRequest, opts ...grpc.CallOption) (*LifecycleCommitResponse, error)
+	LifecycleInit(ctx context.Context, in *LifecycleInitRequest, opts ...grpc.CallOption) (*LifecycleInitResponse, error)
 	ConfigAnchorList(ctx context.Context, in *ConfigAnchorListRequest, opts ...grpc.CallOption) (*ConfigAnchorListResponse, error)
 	ConfigAnchorModify(ctx context.Context, in *ConfigAnchorModifyRequest, opts ...grpc.CallOption) (*ConfigAnchorModifyResponse, error)
 	ConfigOrderingList(ctx context.Context, in *ConfigOrderingListRequest, opts ...grpc.CallOption) (*ConfigOrderingListResponse, error)
-	ConfigOrderingAdd(ctx context.Context, in *ConfigOrderingAddRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	ConfigOrderingUpdate(ctx context.Context, in *ConfigOrderingUpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	ConfigOrderingDelete(ctx context.Context, in *ConfigOrderingDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ConfigOrderingAdd(ctx context.Context, in *ConfigOrderingAddRequest, opts ...grpc.CallOption) (*ConfigOrderingAddResponse, error)
+	ConfigOrderingUpdate(ctx context.Context, in *ConfigOrderingUpdateRequest, opts ...grpc.CallOption) (*ConfigOrderingUpdateResponse, error)
+	ConfigOrderingDelete(ctx context.Context, in *ConfigOrderingDeleteRequest, opts ...grpc.CallOption) (*ConfigOrderingDeleteResponse, error)
+	ConfigSmartBFTGet(ctx context.Context, in *ConfigSmartBFTGetRequest, opts ...grpc.CallOption) (*ConfigSmartBFTGetResponse, error)
+	ConfigSmartBFTSet(ctx context.Context, in *ConfigSmartBFTSetRequest, opts ...grpc.CallOption) (*ConfigSmartBFTSetResponse, error)
+	ConfigOrganizationDelete(ctx context.Context, in *ConfigOrganizationDeleteRequest, opts ...grpc.CallOption) (*ConfigOrganizationDeleteResponse, error)
+	ConfigGet(ctx context.Context, in *ConfigGetRequest, opts ...grpc.CallOption) (*ConfigGetResponse, error)
 	DiscoveryEndorsers(ctx context.Context, in *DiscoveryEndorsersRequest, opts ...grpc.CallOption) (*DiscoveryEndorsersResponse, error)
 	DiscoveryPeers(ctx context.Context, in *DiscoveryPeersRequest, opts ...grpc.CallOption) (*DiscoveryPeersResponse, error)
 	DiscoveryConfig(ctx context.Context, in *DiscoveryConfigRequest, opts ...grpc.CallOption) (*DiscoveryConfigResponse, error)
+	OrderingJoin(ctx context.Context, in *OrderingRequest, opts ...grpc.CallOption) (*OrderingJoinResponse, error)
+	OrderingListInfo(ctx context.Context, in *OrderingRequest, opts ...grpc.CallOption) (*OrderingListInfoResponse, error)
+	OrderingRemove(ctx context.Context, in *OrderingRequest, opts ...grpc.CallOption) (*OrderingRemoveResponse, error)
 }
 
 type chaincodeServiceClient struct {
@@ -96,7 +111,7 @@ func (c *chaincodeServiceClient) ChaincodeInstallExternal(ctx context.Context, i
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) ChaincodeInstalled(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ChaincodeInstalledResponse, error) {
+func (c *chaincodeServiceClient) ChaincodeInstalled(ctx context.Context, in *ChaincodeInstalledRequest, opts ...grpc.CallOption) (*ChaincodeInstalledResponse, error) {
 	out := new(ChaincodeInstalledResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_ChaincodeInstalled_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -105,7 +120,7 @@ func (c *chaincodeServiceClient) ChaincodeInstalled(ctx context.Context, in *emp
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) ChannelJoined(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ChannelJoinedResponse, error) {
+func (c *chaincodeServiceClient) ChannelJoined(ctx context.Context, in *ChannelJoinedRequest, opts ...grpc.CallOption) (*ChannelJoinedResponse, error) {
 	out := new(ChannelJoinedResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_ChannelJoined_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -117,6 +132,15 @@ func (c *chaincodeServiceClient) ChannelJoined(ctx context.Context, in *emptypb.
 func (c *chaincodeServiceClient) ChannelJoin(ctx context.Context, in *ChannelJoinRequest, opts ...grpc.CallOption) (*ChannelJoinResponse, error) {
 	out := new(ChannelJoinResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_ChannelJoin_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chaincodeServiceClient) ChannelCreate(ctx context.Context, in *ChannelCreateRequest, opts ...grpc.CallOption) (*ChannelCreateResponse, error) {
+	out := new(ChannelCreateResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_ChannelCreate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -159,8 +183,8 @@ func (c *chaincodeServiceClient) LifecycleFull(ctx context.Context, in *Lifecycl
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) LifecycleApproveForMyOrg(ctx context.Context, in *LifecycleApproveForMyOrgRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *chaincodeServiceClient) LifecycleApproveForMyOrg(ctx context.Context, in *LifecycleApproveForMyOrgRequest, opts ...grpc.CallOption) (*LifecycleApproveForMyOrgResponse, error) {
+	out := new(LifecycleApproveForMyOrgResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_LifecycleApproveForMyOrg_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -168,8 +192,8 @@ func (c *chaincodeServiceClient) LifecycleApproveForMyOrg(ctx context.Context, i
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) LifecycleCommit(ctx context.Context, in *LifecycleCommitRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *chaincodeServiceClient) LifecycleCommit(ctx context.Context, in *LifecycleCommitRequest, opts ...grpc.CallOption) (*LifecycleCommitResponse, error) {
+	out := new(LifecycleCommitResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_LifecycleCommit_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -177,8 +201,8 @@ func (c *chaincodeServiceClient) LifecycleCommit(ctx context.Context, in *Lifecy
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) LifecycleInit(ctx context.Context, in *LifecycleInitRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *chaincodeServiceClient) LifecycleInit(ctx context.Context, in *LifecycleInitRequest, opts ...grpc.CallOption) (*LifecycleInitResponse, error) {
+	out := new(LifecycleInitResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_LifecycleInit_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -213,8 +237,8 @@ func (c *chaincodeServiceClient) ConfigOrderingList(ctx context.Context, in *Con
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) ConfigOrderingAdd(ctx context.Context, in *ConfigOrderingAddRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *chaincodeServiceClient) ConfigOrderingAdd(ctx context.Context, in *ConfigOrderingAddRequest, opts ...grpc.CallOption) (*ConfigOrderingAddResponse, error) {
+	out := new(ConfigOrderingAddResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_ConfigOrderingAdd_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -222,8 +246,8 @@ func (c *chaincodeServiceClient) ConfigOrderingAdd(ctx context.Context, in *Conf
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) ConfigOrderingUpdate(ctx context.Context, in *ConfigOrderingUpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *chaincodeServiceClient) ConfigOrderingUpdate(ctx context.Context, in *ConfigOrderingUpdateRequest, opts ...grpc.CallOption) (*ConfigOrderingUpdateResponse, error) {
+	out := new(ConfigOrderingUpdateResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_ConfigOrderingUpdate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -231,9 +255,45 @@ func (c *chaincodeServiceClient) ConfigOrderingUpdate(ctx context.Context, in *C
 	return out, nil
 }
 
-func (c *chaincodeServiceClient) ConfigOrderingDelete(ctx context.Context, in *ConfigOrderingDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *chaincodeServiceClient) ConfigOrderingDelete(ctx context.Context, in *ConfigOrderingDeleteRequest, opts ...grpc.CallOption) (*ConfigOrderingDeleteResponse, error) {
+	out := new(ConfigOrderingDeleteResponse)
 	err := c.cc.Invoke(ctx, ChaincodeService_ConfigOrderingDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chaincodeServiceClient) ConfigSmartBFTGet(ctx context.Context, in *ConfigSmartBFTGetRequest, opts ...grpc.CallOption) (*ConfigSmartBFTGetResponse, error) {
+	out := new(ConfigSmartBFTGetResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_ConfigSmartBFTGet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chaincodeServiceClient) ConfigSmartBFTSet(ctx context.Context, in *ConfigSmartBFTSetRequest, opts ...grpc.CallOption) (*ConfigSmartBFTSetResponse, error) {
+	out := new(ConfigSmartBFTSetResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_ConfigSmartBFTSet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chaincodeServiceClient) ConfigOrganizationDelete(ctx context.Context, in *ConfigOrganizationDeleteRequest, opts ...grpc.CallOption) (*ConfigOrganizationDeleteResponse, error) {
+	out := new(ConfigOrganizationDeleteResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_ConfigOrganizationDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chaincodeServiceClient) ConfigGet(ctx context.Context, in *ConfigGetRequest, opts ...grpc.CallOption) (*ConfigGetResponse, error) {
+	out := new(ConfigGetResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_ConfigGet_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -267,31 +327,66 @@ func (c *chaincodeServiceClient) DiscoveryConfig(ctx context.Context, in *Discov
 	return out, nil
 }
 
+func (c *chaincodeServiceClient) OrderingJoin(ctx context.Context, in *OrderingRequest, opts ...grpc.CallOption) (*OrderingJoinResponse, error) {
+	out := new(OrderingJoinResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_OrderingJoin_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chaincodeServiceClient) OrderingListInfo(ctx context.Context, in *OrderingRequest, opts ...grpc.CallOption) (*OrderingListInfoResponse, error) {
+	out := new(OrderingListInfoResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_OrderingListInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chaincodeServiceClient) OrderingRemove(ctx context.Context, in *OrderingRequest, opts ...grpc.CallOption) (*OrderingRemoveResponse, error) {
+	out := new(OrderingRemoveResponse)
+	err := c.cc.Invoke(ctx, ChaincodeService_OrderingRemove_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChaincodeServiceServer is the server API for ChaincodeService service.
 // All implementations must embed UnimplementedChaincodeServiceServer
 // for forward compatibility
 type ChaincodeServiceServer interface {
 	ChaincodeInstall(context.Context, *ChaincodeInstallRequest) (*ChaincodeInstallResponse, error)
 	ChaincodeInstallExternal(context.Context, *ChaincodeInstallExternalRequest) (*ChaincodeInstallResponse, error)
-	ChaincodeInstalled(context.Context, *emptypb.Empty) (*ChaincodeInstalledResponse, error)
-	ChannelJoined(context.Context, *emptypb.Empty) (*ChannelJoinedResponse, error)
+	ChaincodeInstalled(context.Context, *ChaincodeInstalledRequest) (*ChaincodeInstalledResponse, error)
+	ChannelJoined(context.Context, *ChannelJoinedRequest) (*ChannelJoinedResponse, error)
 	ChannelJoin(context.Context, *ChannelJoinRequest) (*ChannelJoinResponse, error)
+	ChannelCreate(context.Context, *ChannelCreateRequest) (*ChannelCreateResponse, error)
 	LifecycleStatus(context.Context, *LifecycleStatusRequest) (*LifecycleStatusResponse, error)
 	LifecycleApproved(context.Context, *LifecycleApprovedRequest) (*LifecycleApprovedResponse, error)
 	LifecycleCheckCommitReadiness(context.Context, *LifecycleCheckCommitReadinessRequest) (*LifecycleCheckCommitReadinessResponse, error)
 	LifecycleFull(context.Context, *LifecycleFullRequest) (*LifecycleFullResponse, error)
-	LifecycleApproveForMyOrg(context.Context, *LifecycleApproveForMyOrgRequest) (*emptypb.Empty, error)
-	LifecycleCommit(context.Context, *LifecycleCommitRequest) (*emptypb.Empty, error)
-	LifecycleInit(context.Context, *LifecycleInitRequest) (*emptypb.Empty, error)
+	LifecycleApproveForMyOrg(context.Context, *LifecycleApproveForMyOrgRequest) (*LifecycleApproveForMyOrgResponse, error)
+	LifecycleCommit(context.Context, *LifecycleCommitRequest) (*LifecycleCommitResponse, error)
+	LifecycleInit(context.Context, *LifecycleInitRequest) (*LifecycleInitResponse, error)
 	ConfigAnchorList(context.Context, *ConfigAnchorListRequest) (*ConfigAnchorListResponse, error)
 	ConfigAnchorModify(context.Context, *ConfigAnchorModifyRequest) (*ConfigAnchorModifyResponse, error)
 	ConfigOrderingList(context.Context, *ConfigOrderingListRequest) (*ConfigOrderingListResponse, error)
-	ConfigOrderingAdd(context.Context, *ConfigOrderingAddRequest) (*emptypb.Empty, error)
-	ConfigOrderingUpdate(context.Context, *ConfigOrderingUpdateRequest) (*emptypb.Empty, error)
-	ConfigOrderingDelete(context.Context, *ConfigOrderingDeleteRequest) (*emptypb.Empty, error)
+	ConfigOrderingAdd(context.Context, *ConfigOrderingAddRequest) (*ConfigOrderingAddResponse, error)
+	ConfigOrderingUpdate(context.Context, *ConfigOrderingUpdateRequest) (*ConfigOrderingUpdateResponse, error)
+	ConfigOrderingDelete(context.Context, *ConfigOrderingDeleteRequest) (*ConfigOrderingDeleteResponse, error)
+	ConfigSmartBFTGet(context.Context, *ConfigSmartBFTGetRequest) (*ConfigSmartBFTGetResponse, error)
+	ConfigSmartBFTSet(context.Context, *ConfigSmartBFTSetRequest) (*ConfigSmartBFTSetResponse, error)
+	ConfigOrganizationDelete(context.Context, *ConfigOrganizationDeleteRequest) (*ConfigOrganizationDeleteResponse, error)
+	ConfigGet(context.Context, *ConfigGetRequest) (*ConfigGetResponse, error)
 	DiscoveryEndorsers(context.Context, *DiscoveryEndorsersRequest) (*DiscoveryEndorsersResponse, error)
 	DiscoveryPeers(context.Context, *DiscoveryPeersRequest) (*DiscoveryPeersResponse, error)
 	DiscoveryConfig(context.Context, *DiscoveryConfigRequest) (*DiscoveryConfigResponse, error)
+	OrderingJoin(context.Context, *OrderingRequest) (*OrderingJoinResponse, error)
+	OrderingListInfo(context.Context, *OrderingRequest) (*OrderingListInfoResponse, error)
+	OrderingRemove(context.Context, *OrderingRequest) (*OrderingRemoveResponse, error)
 	mustEmbedUnimplementedChaincodeServiceServer()
 }
 
@@ -305,14 +400,17 @@ func (UnimplementedChaincodeServiceServer) ChaincodeInstall(context.Context, *Ch
 func (UnimplementedChaincodeServiceServer) ChaincodeInstallExternal(context.Context, *ChaincodeInstallExternalRequest) (*ChaincodeInstallResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChaincodeInstallExternal not implemented")
 }
-func (UnimplementedChaincodeServiceServer) ChaincodeInstalled(context.Context, *emptypb.Empty) (*ChaincodeInstalledResponse, error) {
+func (UnimplementedChaincodeServiceServer) ChaincodeInstalled(context.Context, *ChaincodeInstalledRequest) (*ChaincodeInstalledResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChaincodeInstalled not implemented")
 }
-func (UnimplementedChaincodeServiceServer) ChannelJoined(context.Context, *emptypb.Empty) (*ChannelJoinedResponse, error) {
+func (UnimplementedChaincodeServiceServer) ChannelJoined(context.Context, *ChannelJoinedRequest) (*ChannelJoinedResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChannelJoined not implemented")
 }
 func (UnimplementedChaincodeServiceServer) ChannelJoin(context.Context, *ChannelJoinRequest) (*ChannelJoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChannelJoin not implemented")
+}
+func (UnimplementedChaincodeServiceServer) ChannelCreate(context.Context, *ChannelCreateRequest) (*ChannelCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChannelCreate not implemented")
 }
 func (UnimplementedChaincodeServiceServer) LifecycleStatus(context.Context, *LifecycleStatusRequest) (*LifecycleStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LifecycleStatus not implemented")
@@ -326,13 +424,13 @@ func (UnimplementedChaincodeServiceServer) LifecycleCheckCommitReadiness(context
 func (UnimplementedChaincodeServiceServer) LifecycleFull(context.Context, *LifecycleFullRequest) (*LifecycleFullResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LifecycleFull not implemented")
 }
-func (UnimplementedChaincodeServiceServer) LifecycleApproveForMyOrg(context.Context, *LifecycleApproveForMyOrgRequest) (*emptypb.Empty, error) {
+func (UnimplementedChaincodeServiceServer) LifecycleApproveForMyOrg(context.Context, *LifecycleApproveForMyOrgRequest) (*LifecycleApproveForMyOrgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LifecycleApproveForMyOrg not implemented")
 }
-func (UnimplementedChaincodeServiceServer) LifecycleCommit(context.Context, *LifecycleCommitRequest) (*emptypb.Empty, error) {
+func (UnimplementedChaincodeServiceServer) LifecycleCommit(context.Context, *LifecycleCommitRequest) (*LifecycleCommitResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LifecycleCommit not implemented")
 }
-func (UnimplementedChaincodeServiceServer) LifecycleInit(context.Context, *LifecycleInitRequest) (*emptypb.Empty, error) {
+func (UnimplementedChaincodeServiceServer) LifecycleInit(context.Context, *LifecycleInitRequest) (*LifecycleInitResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LifecycleInit not implemented")
 }
 func (UnimplementedChaincodeServiceServer) ConfigAnchorList(context.Context, *ConfigAnchorListRequest) (*ConfigAnchorListResponse, error) {
@@ -344,14 +442,26 @@ func (UnimplementedChaincodeServiceServer) ConfigAnchorModify(context.Context, *
 func (UnimplementedChaincodeServiceServer) ConfigOrderingList(context.Context, *ConfigOrderingListRequest) (*ConfigOrderingListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfigOrderingList not implemented")
 }
-func (UnimplementedChaincodeServiceServer) ConfigOrderingAdd(context.Context, *ConfigOrderingAddRequest) (*emptypb.Empty, error) {
+func (UnimplementedChaincodeServiceServer) ConfigOrderingAdd(context.Context, *ConfigOrderingAddRequest) (*ConfigOrderingAddResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfigOrderingAdd not implemented")
 }
-func (UnimplementedChaincodeServiceServer) ConfigOrderingUpdate(context.Context, *ConfigOrderingUpdateRequest) (*emptypb.Empty, error) {
+func (UnimplementedChaincodeServiceServer) ConfigOrderingUpdate(context.Context, *ConfigOrderingUpdateRequest) (*ConfigOrderingUpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfigOrderingUpdate not implemented")
 }
-func (UnimplementedChaincodeServiceServer) ConfigOrderingDelete(context.Context, *ConfigOrderingDeleteRequest) (*emptypb.Empty, error) {
+func (UnimplementedChaincodeServiceServer) ConfigOrderingDelete(context.Context, *ConfigOrderingDeleteRequest) (*ConfigOrderingDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfigOrderingDelete not implemented")
+}
+func (UnimplementedChaincodeServiceServer) ConfigSmartBFTGet(context.Context, *ConfigSmartBFTGetRequest) (*ConfigSmartBFTGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfigSmartBFTGet not implemented")
+}
+func (UnimplementedChaincodeServiceServer) ConfigSmartBFTSet(context.Context, *ConfigSmartBFTSetRequest) (*ConfigSmartBFTSetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfigSmartBFTSet not implemented")
+}
+func (UnimplementedChaincodeServiceServer) ConfigOrganizationDelete(context.Context, *ConfigOrganizationDeleteRequest) (*ConfigOrganizationDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfigOrganizationDelete not implemented")
+}
+func (UnimplementedChaincodeServiceServer) ConfigGet(context.Context, *ConfigGetRequest) (*ConfigGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfigGet not implemented")
 }
 func (UnimplementedChaincodeServiceServer) DiscoveryEndorsers(context.Context, *DiscoveryEndorsersRequest) (*DiscoveryEndorsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DiscoveryEndorsers not implemented")
@@ -361,6 +471,15 @@ func (UnimplementedChaincodeServiceServer) DiscoveryPeers(context.Context, *Disc
 }
 func (UnimplementedChaincodeServiceServer) DiscoveryConfig(context.Context, *DiscoveryConfigRequest) (*DiscoveryConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DiscoveryConfig not implemented")
+}
+func (UnimplementedChaincodeServiceServer) OrderingJoin(context.Context, *OrderingRequest) (*OrderingJoinResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OrderingJoin not implemented")
+}
+func (UnimplementedChaincodeServiceServer) OrderingListInfo(context.Context, *OrderingRequest) (*OrderingListInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OrderingListInfo not implemented")
+}
+func (UnimplementedChaincodeServiceServer) OrderingRemove(context.Context, *OrderingRequest) (*OrderingRemoveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OrderingRemove not implemented")
 }
 func (UnimplementedChaincodeServiceServer) mustEmbedUnimplementedChaincodeServiceServer() {}
 
@@ -412,7 +531,7 @@ func _ChaincodeService_ChaincodeInstallExternal_Handler(srv interface{}, ctx con
 }
 
 func _ChaincodeService_ChaincodeInstalled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(ChaincodeInstalledRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -424,13 +543,13 @@ func _ChaincodeService_ChaincodeInstalled_Handler(srv interface{}, ctx context.C
 		FullMethod: ChaincodeService_ChaincodeInstalled_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChaincodeServiceServer).ChaincodeInstalled(ctx, req.(*emptypb.Empty))
+		return srv.(ChaincodeServiceServer).ChaincodeInstalled(ctx, req.(*ChaincodeInstalledRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ChaincodeService_ChannelJoined_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(ChannelJoinedRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -442,7 +561,7 @@ func _ChaincodeService_ChannelJoined_Handler(srv interface{}, ctx context.Contex
 		FullMethod: ChaincodeService_ChannelJoined_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChaincodeServiceServer).ChannelJoined(ctx, req.(*emptypb.Empty))
+		return srv.(ChaincodeServiceServer).ChannelJoined(ctx, req.(*ChannelJoinedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -461,6 +580,24 @@ func _ChaincodeService_ChannelJoin_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChaincodeServiceServer).ChannelJoin(ctx, req.(*ChannelJoinRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChaincodeService_ChannelCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChannelCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).ChannelCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_ChannelCreate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).ChannelCreate(ctx, req.(*ChannelCreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -699,6 +836,78 @@ func _ChaincodeService_ConfigOrderingDelete_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChaincodeService_ConfigSmartBFTGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigSmartBFTGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).ConfigSmartBFTGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_ConfigSmartBFTGet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).ConfigSmartBFTGet(ctx, req.(*ConfigSmartBFTGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChaincodeService_ConfigSmartBFTSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigSmartBFTSetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).ConfigSmartBFTSet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_ConfigSmartBFTSet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).ConfigSmartBFTSet(ctx, req.(*ConfigSmartBFTSetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChaincodeService_ConfigOrganizationDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigOrganizationDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).ConfigOrganizationDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_ConfigOrganizationDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).ConfigOrganizationDelete(ctx, req.(*ConfigOrganizationDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChaincodeService_ConfigGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).ConfigGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_ConfigGet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).ConfigGet(ctx, req.(*ConfigGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ChaincodeService_DiscoveryEndorsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DiscoveryEndorsersRequest)
 	if err := dec(in); err != nil {
@@ -753,6 +962,60 @@ func _ChaincodeService_DiscoveryConfig_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChaincodeService_OrderingJoin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).OrderingJoin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_OrderingJoin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).OrderingJoin(ctx, req.(*OrderingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChaincodeService_OrderingListInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).OrderingListInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_OrderingListInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).OrderingListInfo(ctx, req.(*OrderingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChaincodeService_OrderingRemove_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChaincodeServiceServer).OrderingRemove(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChaincodeService_OrderingRemove_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChaincodeServiceServer).OrderingRemove(ctx, req.(*OrderingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChaincodeService_ServiceDesc is the grpc.ServiceDesc for ChaincodeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -779,6 +1042,10 @@ var ChaincodeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChannelJoin",
 			Handler:    _ChaincodeService_ChannelJoin_Handler,
+		},
+		{
+			MethodName: "ChannelCreate",
+			Handler:    _ChaincodeService_ChannelCreate_Handler,
 		},
 		{
 			MethodName: "LifecycleStatus",
@@ -833,6 +1100,22 @@ var ChaincodeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChaincodeService_ConfigOrderingDelete_Handler,
 		},
 		{
+			MethodName: "ConfigSmartBFTGet",
+			Handler:    _ChaincodeService_ConfigSmartBFTGet_Handler,
+		},
+		{
+			MethodName: "ConfigSmartBFTSet",
+			Handler:    _ChaincodeService_ConfigSmartBFTSet_Handler,
+		},
+		{
+			MethodName: "ConfigOrganizationDelete",
+			Handler:    _ChaincodeService_ConfigOrganizationDelete_Handler,
+		},
+		{
+			MethodName: "ConfigGet",
+			Handler:    _ChaincodeService_ConfigGet_Handler,
+		},
+		{
 			MethodName: "DiscoveryEndorsers",
 			Handler:    _ChaincodeService_DiscoveryEndorsers_Handler,
 		},
@@ -843,6 +1126,18 @@ var ChaincodeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DiscoveryConfig",
 			Handler:    _ChaincodeService_DiscoveryConfig_Handler,
+		},
+		{
+			MethodName: "OrderingJoin",
+			Handler:    _ChaincodeService_OrderingJoin_Handler,
+		},
+		{
+			MethodName: "OrderingListInfo",
+			Handler:    _ChaincodeService_OrderingListInfo_Handler,
+		},
+		{
+			MethodName: "OrderingRemove",
+			Handler:    _ChaincodeService_OrderingRemove_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

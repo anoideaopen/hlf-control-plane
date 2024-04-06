@@ -11,12 +11,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
-	"github.com/anoideaopen/hlf-control-plane/proto"
 	fd "github.com/hyperledger/fabric-protos-go/discovery"
 	pb "github.com/hyperledger/fabric-protos-go/peer"
 	discovery "github.com/hyperledger/fabric/discovery/client"
 	"github.com/hyperledger/fabric/protoutil"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -150,7 +150,6 @@ func (c *cli) getPeerResponse(peers []*discovery.Peer) ([]*proto.DiscoveryPeer, 
 	return discoveryPeers, nil
 }
 
-// NewClient creates and returns a new client for interacting with a transaction service.
 func NewClient(log *zap.Logger, mspID string, pool peer.Pool, id protoutil.Signer) Client {
 	l := log.Named("discovery")
 

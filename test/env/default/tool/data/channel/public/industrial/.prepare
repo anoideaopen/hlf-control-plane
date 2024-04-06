@@ -1,0 +1,3 @@
+CHAINCODE_VERSION="1676556920"
+CHAINCODE_POLICY="AND('org0.member', OutOf(1, 'org1.member', 'org2.member'))"
+CHAINCODE_INIT="skip"

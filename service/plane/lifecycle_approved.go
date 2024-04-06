@@ -3,9 +3,9 @@ package plane
 import (
 	"context"
 
-	"github.com/anoideaopen/hlf-control-plane/proto"
-	"github.com/anoideaopen/hlf-control-plane/system/lifecycle"
 	lifecycle2 "github.com/hyperledger/fabric-protos-go/peer/lifecycle"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/system/lifecycle"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

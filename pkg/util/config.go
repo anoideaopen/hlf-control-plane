@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/anoideaopen/hlf-control-plane/pkg/peer"
-	pb "github.com/anoideaopen/hlf-control-plane/proto"
 	"github.com/golang/protobuf/proto" //nolint:staticcheck
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/msp"
@@ -14,11 +12,11 @@ import (
 	"github.com/hyperledger/fabric-protos-go/orderer/smartbft"
 	pp "github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/hyperledger/fabric/common/channelconfig"
+	"gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/pkg/peer"
+	pb "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto"
 	"golang.org/x/exp/slices"
 )
 
-// GetOrdererConfig function extracts information about the orderer nodes and
-// consensus type from a given configuration
 func GetOrdererConfig(conf *common.Config) ([]*pb.Orderer, pb.ConsensusType, error) { //nolint:funlen
 	ordererGroup, ok := conf.ChannelGroup.Groups[channelconfig.OrdererGroupKey]
 	if !ok {
@@ -117,7 +115,6 @@ func getConsenterMap(ordererGroup *common.ConfigGroup) (map[string]*pb.Orderer, 
 	return ret, nil
 }
 
-// ConvertConsensusType converts an orderer.ConsensusType to a pb.ConsensusType.
 func ConvertConsensusType(cType *orderer.ConsensusType) pb.ConsensusType {
 	switch cType.Type {
 	case "smartbft":
@@ -145,7 +142,6 @@ func getOrgMspMap(conf *common.Config) (map[string]*msp.FabricMSPConfig, error) 
 	return orgMap, nil
 }
 
-// GetPeerConfig extracts the peer configuration for one or more MSPs from a common.Config.
 func GetPeerConfig(conf *common.Config, mspIds ...string) ([]*peer.Peer, error) {
 	// sort msp identifiers for future search usage
 	sort.Strings(mspIds)
@@ -181,7 +177,6 @@ func GetPeerConfig(conf *common.Config, mspIds ...string) ([]*peer.Peer, error) 
 	return peers, nil
 }
 
-// GetAnchorPeerConfig extracts the anchor peer configuration for a specific MSP from a common.Config.
 func GetAnchorPeerConfig(conf *common.Config, mspID string) ([]*pp.AnchorPeer, error) {
 	applicationGroup, ok := conf.ChannelGroup.Groups[channelconfig.ApplicationGroupKey]
 	if !ok {
@@ -225,7 +220,6 @@ func GetMspConfig(group *common.ConfigGroup) (*msp.FabricMSPConfig, error) {
 	return &conf, nil
 }
 
-// GetEndpoints extracts the orderer addresses from a common.ConfigGroup.
 func GetEndpoints(group *common.ConfigGroup) (*common.OrdererAddresses, error) {
 	addrValue, ok := group.Values[channelconfig.EndpointsKey]
 	if !ok {
