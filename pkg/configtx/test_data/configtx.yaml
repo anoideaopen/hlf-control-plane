@@ -1,0 +1,200 @@
+Organizations:
+  - &org0
+    Name: org0
+    ID: org0
+    MSPDir: /public/prod-org0-orderer-001.internal.org0.prod.core.n-t.io/msp
+    Policies: &org0Policies
+      Readers:
+        Type: Signature
+        Rule: "OR('org0.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('org0.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('org0.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('org0.peer')"
+  - &org1
+    Name: org1
+    ID: org1
+    MSPDir: /public/prod-org1-orderer-001.internal.org1.prod.core.n-t.io/msp
+    Policies: &org1Policies
+      Readers:
+        Type: Signature
+        Rule: "OR('org1.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('org1.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('org1.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('org1.peer')"
+
+Capabilities:
+  Channel: &ChannelCapabilities
+    V2_0: true
+  Orderer: &OrdererCapabilities
+    V2_0: true
+  Application: &ApplicationCapabilities
+    V2_0: true
+
+Application: &ApplicationDefaults
+  Organizations:
+  Policies: &ApplicationDefaultPolicies
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Endorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+  OrdererType: smartbft
+  Addresses:
+    - prod-org0-orderer-001.internal.org0.prod.core.n-t.io:7050
+    - prod-org0-orderer-002.internal.org0.prod.core.n-t.io:7050
+    - prod-org0-orderer-003.internal.org0.prod.core.n-t.io:7050
+    - prod-org0-orderer-004.internal.org0.prod.core.n-t.io:7050
+    - prod-org1-orderer-001.internal.org1.prod.core.n-t.io:7050
+    - prod-org1-orderer-002.internal.org1.prod.core.n-t.io:7050
+    - prod-org1-orderer-003.internal.org1.prod.core.n-t.io:7050
+  BatchTimeout: 500ms
+  BatchSize:
+    MaxMessageCount: 500
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 2 MB
+  MaxChannels: 0
+  SmartBFT:
+    Options:
+      LeaderRotation: 1
+      DecisionsPerLeader: 0
+      RequestBatchMaxCount: 100
+      RequestBatchMaxBytes: 10485760
+      RequestBatchMaxInterval: 500ms
+      IncomingMessageBufferSize: 1000
+      RequestPoolSize: 100
+      RequestForwardTimeout: 2s
+      RequestComplainTimeout: 20s
+      RequestAutoRemoveTimeout: 3m
+      ViewChangeResendInterval: 5s
+      ViewChangeTimeout: 20s
+      LeaderHeartbeatTimeout: 1m
+      LeaderHeartbeatCount: 10
+      CollectTimeout: 1s
+      SyncOnStart: false
+      SpeedUpViewChange: false
+      RequestMaxBytes: 512000
+      RequestPoolSubmitTimeout: 5s
+    Consenters:
+      - Host: prod-org0-orderer-001.internal.org0.prod.core.n-t.io
+        Port: 7050
+        ClientTLSCert: /public/prod-org0-orderer-001.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        ServerTLSCert: /public/prod-org0-orderer-001.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        MSPID: org0
+        Identity: /public/prod-org0-orderer-001.internal.org0.prod.core.n-t.io/msp/signcerts/cert.pem
+        ConsenterId: 1
+      - Host: prod-org0-orderer-002.internal.org0.prod.core.n-t.io
+        Port: 7050
+        ClientTLSCert: /public/prod-org0-orderer-002.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        ServerTLSCert: /public/prod-org0-orderer-002.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        MSPID: org0
+        Identity: /public/prod-org0-orderer-002.internal.org0.prod.core.n-t.io/msp/signcerts/cert.pem
+        ConsenterId: 2
+      - Host: prod-org0-orderer-003.internal.org0.prod.core.n-t.io
+        Port: 7050
+        ClientTLSCert: /public/prod-org0-orderer-003.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        ServerTLSCert: /public/prod-org0-orderer-003.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        MSPID: org0
+        Identity: /public/prod-org0-orderer-003.internal.org0.prod.core.n-t.io/msp/signcerts/cert.pem
+        ConsenterId: 3
+      - Host: prod-org0-orderer-004.internal.org0.prod.core.n-t.io
+        Port: 7050
+        ClientTLSCert: /public/prod-org0-orderer-004.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        ServerTLSCert: /public/prod-org0-orderer-004.internal.org0.prod.core.n-t.io/tls/signcerts/cert.pem
+        MSPID: org0
+        Identity: /public/prod-org0-orderer-004.internal.org0.prod.core.n-t.io/msp/signcerts/cert.pem
+        ConsenterId: 4
+      - Host: prod-org1-orderer-001.internal.org1.prod.core.n-t.io
+        Port: 7050
+        ClientTLSCert: /public/prod-org1-orderer-001.internal.org1.prod.core.n-t.io/tls/signcerts/cert.pem
+        ServerTLSCert: /public/prod-org1-orderer-001.internal.org1.prod.core.n-t.io/tls/signcerts/cert.pem
+        MSPID: org1
+        Identity: /public/prod-org1-orderer-001.internal.org1.prod.core.n-t.io/msp/signcerts/cert.pem
+        ConsenterId: 5
+      - Host: prod-org1-orderer-002.internal.org1.prod.core.n-t.io
+        Port: 7050
+        ClientTLSCert: /public/prod-org1-orderer-002.internal.org1.prod.core.n-t.io/tls/signcerts/cert.pem
+        ServerTLSCert: /public/prod-org1-orderer-002.internal.org1.prod.core.n-t.io/tls/signcerts/cert.pem
+        MSPID: org1
+        Identity: /public/prod-org1-orderer-002.internal.org1.prod.core.n-t.io/msp/signcerts/cert.pem
+        ConsenterId: 6
+      - Host: prod-org1-orderer-003.internal.org1.prod.core.n-t.io
+        Port: 7050
+        ClientTLSCert: /public/prod-org1-orderer-003.internal.org1.prod.core.n-t.io/tls/signcerts/cert.pem
+        ServerTLSCert: /public/prod-org1-orderer-003.internal.org1.prod.core.n-t.io/tls/signcerts/cert.pem
+        MSPID: org1
+        Identity: /public/prod-org1-orderer-003.internal.org1.prod.core.n-t.io/msp/signcerts/cert.pem
+        ConsenterId: 7
+  Organizations:
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    BlockValidation:
+      Type: ImplicitOrderer
+      Rule: SMARTBFT
+
+  Capabilities:
+    <<: *OrdererCapabilities
+Channel: &ChannelDefaults
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ChannelCapabilities
+Profiles:
+  Default:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *org0
+        - *org1
+      Capabilities:
+        <<: *OrdererCapabilities
+    Consortium: DefaultConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *org0
+        - *org1
+      Capabilities:
+        <<: *ApplicationCapabilities

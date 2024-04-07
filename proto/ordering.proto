@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package proto;
+option go_package = "gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane/proto";
+
+message OrderingRequest{
+  message Joined {
+    string host = 1;
+    uint32 port = 2;
+  }
+
+  string host = 1;
+  uint32 port = 2;
+  string channel_name = 3;
+  repeated Joined joined_orderer = 4;
+}
+
+message OrderingRemoveResponse{}
+
+message OrderingJoinResponse{
+  bool exists = 1;
+}
+
+message OrderingListInfoResponse{
+  message ChannelInfo{
+    string name = 1;
+    string status = 2;
+    string consensus_relation = 3;
+    uint64 height = 4;
+  }
+
+  repeated ChannelInfo info = 1;
+}

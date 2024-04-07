@@ -1,0 +1,57 @@
+#!/bin/sh
+#0fd193b38fef3ffcc566c86c1dff964c#
+
+MASTER="$(mktemp)"
+PASS="$(mktemp)"
+PREPARE_SSH_KEY="$(mktemp)"
+PREPARE_SSH_KEY_PASS="$(mktemp)"
+
+echo "-- decrypt ssh keys"
+gpg --batch --yes --passphrase-file "$MASTER_PASS" -o "$MASTER" "/.master.asc"
+gpg --batch --yes --passphrase-file "$MASTER" -d -o "$PREPARE_SSH_KEY" "$PREPARE_SSH_KEY_ASC"
+gpg --batch --yes --passphrase-file "$MASTER" -d -o "$PREPARE_SSH_KEY_PASS" "$PREPARE_SSH_KEY_PASS_ASC"
+
+echo "-- setup ssh socket"
+export SSH_AUTH_SOCK="$(mktemp -u)"
+export SSH_AUTH_EVAL="$(mktemp -u)"
+ssh-agent -t 3600 -a "$SSH_AUTH_SOCK" > "$SSH_AUTH_EVAL"
+sshpass -v -P Enter -f "$PREPARE_SSH_KEY_PASS" timeout 3 ssh-add "$PREPARE_SSH_KEY"
+
+echo "-- set hlf version"
+export IMG_TOOL=scientificideas/fabric-tools:2.4.7-0.1
+export IMG_ORDERER=scientificideas/fabric-orderer:2.4.7-0.1
+export IMG_PEER=scientificideas/fabric-peer:2.4.7-0.1
+
+if [ "$CI_JOB_NAME" = "integration" ]
+then
+    echo "-- download dependencies"
+    mkdir -p ~/.ssh
+    ssh-keyscan "$CI_SERVER_HOST" >> ~/.ssh/known_hosts
+
+    tmp=$(mktemp -d)
+    cd "$tmp"
+        git clone --verbose "git@$CI_SERVER_HOST:core/library/test/sandbox.git" .
+        rsync --verbose --cvs-exclude -lr \
+            "$tmp/atomyze-bft-2.4-devel/" \
+            "$SRC_DIR/test/env/default/"
+    cd "$SRC_DIR"
+
+    echo "-- setting up .netrc file for tests"
+    export NETRC_RW="$(mktemp)" && chmod 0400 "$NETRC_RW"
+    gpg --batch --yes --passphrase-file "$MASTER_PASS" -o /master /.master.asc
+    gpg --batch --yes --passphrase-file /master -d -o "$NETRC_RW" "$NETRC_RAW_INTERNAL_RW_ASC"
+    export NETRC_CONTENT=$(cat "$NETRC_RW")
+
+    echo "-- prepare industrial"
+    tmp=$(mktemp -d)
+    cd "$tmp"
+      git clone --verbose "git@$CI_SERVER_HOST:core/library/test/dummy-cc.git" .
+      rm -v $tmp/public/industrial/.prepare
+      rsync -a \
+               "$tmp/public/industrial/" \
+               "$SRC_DIR/test/env/default/tool/data/channel/public/industrial"
+    cd "$SRC_DIR"
+
+    export IMG_HLF_CONTROL_PLANE="prod-nexus-001:8100/repository/docker/${CI_PROJECT_PATH}:${CI_COMMIT_SHORT_SHA}.${CI_PIPELINE_ID}"
+    . "$SRC_DIR/test/env/default/env-hlf-2.4.8"
+fi

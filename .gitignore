@@ -1,0 +1,5 @@
+.idea
+conf_*.yaml
+certs*
+vendor_proto
+bin
