@@ -1,4 +1,4 @@
-module github.com/anoideaopenl/hlf-control-plane
+module github.com/anoideaopen/hlf-control-plane
 
 go 1.18
 
