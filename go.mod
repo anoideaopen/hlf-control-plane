@@ -1,4 +1,4 @@
-module gitlab.n-t.io/core/library/hlf-tool/hlf-control-plane
+module github.com/anoideaopenl/hlf-control-plane
 
 go 1.18
 
