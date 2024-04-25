@@ -1,0 +1,30 @@
+version: '3.4'
+
+volumes:
+  test--integration:
+
+services:
+  test--integration:
+    image: prod-registry.cicd.prod.core.n-t.io/repository/docker/core/library/toolbox/toolbox-test-go:master
+    restart: "no"
+    user: root
+    depends_on:
+      - tool
+      - test-robot-001.org0
+      - hlf-control-plane.org0
+      - hlf-control-plane.org1
+      - hlf-proxy-public
+    environment:
+      - CI_JOB_TOKEN
+      - CI_SERVER_HOST
+      - CGO_ENABLED=0
+      - HLF_CONTROL_PLANE_API_ORG0=hlf-control-plane.org0:8080
+      - HLF_CONTROL_PLANE_API_ORG1=hlf-control-plane.org1:8080
+      - ALLURE_OUTPUT_PATH=/report
+      - NETRC_CONTENT
+    volumes:
+      - tool:/state
+      - test--integration:/state/test--integration
+      - ./tool/data:/data
+      - ../../integration:/test
+      - ../../../report:/report

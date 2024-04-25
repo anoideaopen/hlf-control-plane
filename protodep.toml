@@ -1,0 +1,18 @@
+proto_outdir = "./vendor_proto"
+
+[[dependencies]]
+target = "github.com/scientificideas/fabric-protos"
+branch = "release-2.5-bft"
+
+[[dependencies]]
+target = "github.com/googleapis/googleapis"
+branch = "master"
+
+[[dependencies]]
+target = "github.com/grpc-ecosystem/grpc-gateway"
+revision = "v2.15.0"
+
+[[dependencies]]
+target = "github.com/protocolbuffers/protobuf/src/google"
+revision = "v24.3"
+path = "google"

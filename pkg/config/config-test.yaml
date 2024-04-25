@@ -1,0 +1,46 @@
+# Msp ID of your organization
+mspId: testnetMSP
+# Logging level
+logLevel: debug
+# Access token value
+accessToken: "my_awesome_token"
+# Path to cert and private key of your identity
+identity:
+  cert: certs_admin.pem
+  key: certs/testnet_admin_key.pem
+# or bccsp config of pkcs11
+#  bccsp:
+#    Default: PKCS11
+#    PKCS11:
+#      immutable: false
+#      label: Org_Admin
+#      library: /usr/lib/softhsm/libsofthsm2.so
+#      pin: 123321
+#      hash: SHA2
+#      security: 256
+
+ids:
+  - cert: certs/testnet_admin.pem
+    key: certs/testnet_admin_key.pem
+    mspId: testnetMSP
+  - cert: certs/testnet_admin.pem
+    key: certs/testnet_admin_key.pem
+    mspId: Org2MSP
+
+# Tls credentials for mutual tls connection
+tls:
+  cert: cert.pem
+  key: key.pem
+  ca: ca.pem
+
+# List of peers managed by organization
+peers:
+  - host: peer1.testnet.stage.core.n-t.io
+    port: 7051
+  - host: peer2.testnet.stage.core.n-t.io
+    port: 7051
+
+# ports configuration fo grpc and http
+listen:
+  http: ":8080"
+  grpc: ":8081"
